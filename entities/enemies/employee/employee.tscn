@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dfmy18fn4ehiv"]
+[gd_scene load_steps=13 format=3 uid="uid://bxuvwabyf1kn8"]
 
 [ext_resource type="PackedScene" uid="uid://dylapl5u3imf3" path="res://entities/enemies/base/enemy.tscn" id="1_0exql"]
 [ext_resource type="Script" path="res://entities/enemies/employee/employee.gd" id="1_j083q"]
@@ -15,7 +15,7 @@ amount = 0.0
 noise = ExtResource("5_ky4js")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f38a7"]
-radius = 2.0
+radius = 1.99999
 height = 3.99999
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7un1p"]
@@ -30,6 +30,7 @@ script = ExtResource("1_j083q")
 aim_dist = 5.0
 
 [node name="Sprite" parent="." index="0"]
+y_sort_enabled = true
 texture = ExtResource("2_gm6v0")
 offset = Vector2(0, -8)
 hframes = 3
@@ -63,10 +64,10 @@ visible = false
 shape = SubResource("CircleShape2D_7un1p")
 
 [node name="CollisionChecker" parent="Collisions" index="1"]
-visible = true
 collision_layer = 0
 
 [node name="Hurtbox" parent="Collisions" index="2"]
+visible = false
 position = Vector2(0, -7)
 
 [node name="CollisionShape2D" parent="Collisions/Hurtbox" index="0"]
@@ -74,7 +75,6 @@ shape = SubResource("CapsuleShape2D_eje3b")
 
 [node name="DamageManager" parent="." index="4"]
 blood_path = NodePath("../Sprite/Blood")
-max_health = 1.5
 
 [node name="Aim" type="Timer" parent="Timers" index="0"]
 one_shot = true

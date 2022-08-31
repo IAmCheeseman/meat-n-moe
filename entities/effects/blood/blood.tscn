@@ -5,7 +5,7 @@
 
 [node name="Blood" type="Sprite2D"]
 modulate = Color(0.764706, 0.14902, 0.117647, 0.694118)
-z_index = -1
+z_index = -2
 texture = ExtResource("1_vycd5")
 hframes = 3
 script = ExtResource("1_h1348")

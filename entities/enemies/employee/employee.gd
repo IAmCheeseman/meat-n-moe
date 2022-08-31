@@ -22,6 +22,7 @@ var _continuous_shots := 0
 func _ready() -> void:
 	arm.hide()
 	_assign_shadow()
+	print('test')
 
 func _process(_delta: float) -> void:
 	blood.frame = sprite.frame
@@ -106,6 +107,6 @@ func _on_death() -> void:
 	corpse.global_position = global_position
 	corpse.velocity = damage_manager.previous_kb * 150
 	GameManager.world.add_child(corpse)
-	corpse.set_sprite(preload("res://assets/entities/employee_corpse.png"))
+#	corpse.set_sprite(preload("res://assets/entities/employee_corpse.png"))
 	
 	queue_free()

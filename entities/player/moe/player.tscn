@@ -35,6 +35,8 @@ moving_platform_floor_layers = 0
 script = ExtResource("1_5dugi")
 accel = 400.0
 frict = 700.0
+roll_speed = 200.0
+roll_time = 0.4
 regen_rate = 0.5
 
 [node name="Animation" type="Node2D" parent="."]
