@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://dylapl5u3imf3"]
+
+[ext_resource type="Script" path="res://entities/enemies/base/enemy.gd" id="1_13r02"]
+[ext_resource type="PackedScene" uid="uid://bcgoeqa11j8fq" path="res://tools/player-detection/player_detector.tscn" id="2_dccav"]
+[ext_resource type="PackedScene" uid="uid://js1bpqxxd18t" path="res://tools/hit-and-hurt-boxes/hurtbox.tscn" id="3_lq6vo"]
+[ext_resource type="Script" path="res://tools/damage-manager/damage_manager.gd" id="4_883d6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rl4ko"]
+radius = 5.0
+
+[node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
+y_sort_enabled = true
+collision_layer = 0
+moving_platform_apply_velocity_on_leave = 2
+moving_platform_floor_layers = 0
+script = ExtResource("1_13r02")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="Shadow" type="Sprite2D" parent="."]
+show_behind_parent = true
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+
+[node name="Collisions" type="Node2D" parent="."]
+
+[node name="PlayerDetection" parent="Collisions" instance=ExtResource("2_dccav")]
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Collisions/PlayerDetection"]
+
+[node name="CollisionChecker" type="Area2D" parent="Collisions"]
+visible = false
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Collisions/CollisionChecker"]
+shape = SubResource("CircleShape2D_rl4ko")
+
+[node name="Hurtbox" parent="Collisions" instance=ExtResource("3_lq6vo")]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/Hurtbox"]
+
+[node name="DamageManager" type="Node" parent="."]
+script = ExtResource("4_883d6")
+hurtbox_path = NodePath("../Collisions/Hurtbox")
+max_health = 1.0
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

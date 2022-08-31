@@ -1,0 +1,93 @@
+[gd_scene load_steps=13 format=3 uid="uid://dfmy18fn4ehiv"]
+
+[ext_resource type="PackedScene" uid="uid://dylapl5u3imf3" path="res://entities/enemies/base/enemy.tscn" id="1_0exql"]
+[ext_resource type="Script" path="res://entities/enemies/employee/employee.gd" id="1_j083q"]
+[ext_resource type="Texture2D" uid="uid://bmpog8qhinxfb" path="res://assets/entities/employee.png" id="2_gm6v0"]
+[ext_resource type="AnimationLibrary" uid="uid://bsyqpj68awff2" path="res://entities/enemies/employee/employee_animations.res" id="3_n3oiy"]
+[ext_resource type="Texture2D" uid="uid://f1n7waaikvi6" path="res://assets/entities/employee_gun.png" id="4_cxfoe"]
+[ext_resource type="Texture2D" uid="uid://j62k70plt7i8" path="res://assets/blood_noise.tres" id="5_ky4js"]
+[ext_resource type="Shader" path="res://assets/blood.gdshader" id="5_tt1vi"]
+[ext_resource type="Texture2D" uid="uid://00t7i55oghkm" path="res://assets/entities/employee_bloody.png" id="7_s7xy8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n50ld"]
+shader = ExtResource("5_tt1vi")
+amount = 0.0
+noise = ExtResource("5_ky4js")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f38a7"]
+radius = 2.0
+height = 3.99999
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7un1p"]
+radius = 90.0222
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eje3b"]
+radius = 5.0
+height = 16.0
+
+[node name="Employee" groups=["employee"] instance=ExtResource("1_0exql")]
+script = ExtResource("1_j083q")
+aim_dist = 5.0
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("2_gm6v0")
+offset = Vector2(0, -8)
+hframes = 3
+vframes = 3
+frame = 6
+
+[node name="Arm" type="Node2D" parent="Sprite" index="0"]
+position = Vector2(3, -6)
+
+[node name="Sprite" type="Sprite2D" parent="Sprite/Arm" index="0"]
+position = Vector2(4, 0)
+texture = ExtResource("4_cxfoe")
+
+[node name="Blood" type="Sprite2D" parent="Sprite" index="1"]
+material = SubResource("ShaderMaterial_n50ld")
+position = Vector2(0, -8)
+texture = ExtResource("7_s7xy8")
+hframes = 3
+vframes = 3
+frame = 6
+
+[node name="CollisionShape" parent="." index="2"]
+position = Vector2(0, -4)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_f38a7")
+
+[node name="PlayerDetection" parent="Collisions" index="0"]
+visible = false
+
+[node name="CollisionShape" parent="Collisions/PlayerDetection" index="0"]
+shape = SubResource("CircleShape2D_7un1p")
+
+[node name="CollisionChecker" parent="Collisions" index="1"]
+visible = true
+collision_layer = 0
+
+[node name="Hurtbox" parent="Collisions" index="2"]
+position = Vector2(0, -7)
+
+[node name="CollisionShape2D" parent="Collisions/Hurtbox" index="0"]
+shape = SubResource("CapsuleShape2D_eje3b")
+
+[node name="DamageManager" parent="." index="4"]
+blood_path = NodePath("../Sprite/Blood")
+max_health = 1.5
+
+[node name="Aim" type="Timer" parent="Timers" index="0"]
+one_shot = true
+
+[node name="WalkGiveUp" type="Timer" parent="Timers" index="1"]
+wait_time = 4.0
+one_shot = true
+
+[node name="AnimationPlayer" parent="." index="6"]
+libraries = {
+"employee_animations": ExtResource("3_n3oiy")
+}
+
+[connection signal="dead" from="DamageManager" to="." method="_on_death"]
+[connection signal="timeout" from="Timers/Aim" to="." method="_on_aim_timeout"]
+[connection signal="timeout" from="Timers/WalkGiveUp" to="." method="_on_give_up_time_timeout"]

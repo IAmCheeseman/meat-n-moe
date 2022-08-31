@@ -1,0 +1,94 @@
+[gd_scene load_steps=15 format=3 uid="uid://pwuylhkc33bh"]
+
+[ext_resource type="Script" path="res://entities/player/moe/player.gd" id="1_5dugi"]
+[ext_resource type="Script" path="res://entities/player/moe/animate.gd" id="2_x5t0t"]
+[ext_resource type="Texture2D" uid="uid://tk4ukkg7wk5b" path="res://assets/entities/moe.png" id="3_kq5nx"]
+[ext_resource type="Shader" path="res://assets/blood.gdshader" id="4_4rq8x"]
+[ext_resource type="Texture2D" uid="uid://j62k70plt7i8" path="res://assets/blood_noise.tres" id="4_7xsrt"]
+[ext_resource type="Texture2D" uid="uid://ckccmvwkjddqx" path="res://assets/entities/moe_bloody.png" id="5_imny8"]
+[ext_resource type="PackedScene" uid="uid://djb4vg80da4om" path="res://entities/player/moe/gun.tscn" id="6_5hlaf"]
+[ext_resource type="PackedScene" uid="uid://js1bpqxxd18t" path="res://tools/hit-and-hurt-boxes/hurtbox.tscn" id="6_jgqc7"]
+[ext_resource type="Script" path="res://tools/damage-manager/damage_manager.gd" id="7_i625j"]
+[ext_resource type="Shader" path="res://entities/player/moe/health.gdshader" id="8_wbss7"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pfjri"]
+radius = 2.0
+height = 8.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_etbls"]
+shader = ExtResource("4_4rq8x")
+amount = 0.0
+noise = ExtResource("4_7xsrt")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k7ruj"]
+radius = 5.09902
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3l3cy"]
+shader = ExtResource("8_wbss7")
+amp = 0.0
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+y_sort_enabled = true
+collision_layer = 2
+moving_platform_apply_velocity_on_leave = 2
+moving_platform_floor_layers = 0
+script = ExtResource("1_5dugi")
+accel = 400.0
+frict = 700.0
+regen_rate = 0.5
+
+[node name="Animation" type="Node2D" parent="."]
+script = ExtResource("2_x5t0t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_pfjri")
+
+[node name="Camera" type="Camera2D" parent="."]
+current = true
+smoothing_enabled = true
+smoothing_speed = 20.0
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("3_kq5nx")
+
+[node name="Blood" type="Sprite2D" parent="Sprite"]
+material = SubResource("ShaderMaterial_etbls")
+texture = ExtResource("5_imny8")
+
+[node name="Weapons" type="Node2D" parent="Sprite"]
+
+[node name="Gun" parent="Sprite/Weapons" instance=ExtResource("6_5hlaf")]
+
+[node name="Shadow" type="Sprite2D" parent="."]
+show_behind_parent = true
+position = Vector2(0, 3)
+
+[node name="Collision" type="Node2D" parent="."]
+
+[node name="Hurtbox" parent="Collision" instance=ExtResource("6_jgqc7")]
+visible = false
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision/Hurtbox"]
+shape = SubResource("CircleShape2D_k7ruj")
+
+[node name="DamageManager" type="Node" parent="."]
+script = ExtResource("7_i625j")
+hurtbox_path = NodePath("../Collision/Hurtbox")
+is_enemy = false
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="Roll" type="Timer" parent="Timers"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Health" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_3l3cy")
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[connection signal="dead" from="DamageManager" to="." method="_on_damage_manager_dead"]
+[connection signal="timeout" from="Timers/Roll" to="." method="_on_roll_timeout"]

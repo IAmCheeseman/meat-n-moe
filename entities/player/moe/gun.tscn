@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://djb4vg80da4om"]
+
+[ext_resource type="Script" path="res://entities/player/moe/gun.gd" id="1_3qbeh"]
+[ext_resource type="Texture2D" uid="uid://dvcas4jqvq5jo" path="res://assets/entities/moe_gun.png" id="2_pl6gk"]
+
+[node name="Gun" type="Node2D"]
+script = ExtResource("1_3qbeh")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(9, 0)
+texture = ExtResource("2_pl6gk")
+
+[node name="ShootPosition" type="Position2D" parent="."]
+position = Vector2(13, 1.49012e-08)
+
+[node name="Cooldown" type="Timer" parent="."]
+wait_time = 0.35
+one_shot = true
