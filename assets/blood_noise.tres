@@ -1,4 +1,4 @@
-[gd_resource type="NoiseTexture" load_steps=2 format=3 uid="uid://j62k70plt7i8"]
+[gd_resource type="NoiseTexture2D" load_steps=2 format=3 uid="uid://j62k70plt7i8"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_fo436"]
 fractal_type = 2

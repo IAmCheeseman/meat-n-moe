@@ -1,4 +1,5 @@
 extends Enemy
+class_name Employee
 
 @onready var blood := $Sprite/Blood
 
@@ -22,7 +23,6 @@ var _continuous_shots := 0
 func _ready() -> void:
 	arm.hide()
 	_assign_shadow()
-	print('test')
 
 func _process(_delta: float) -> void:
 	blood.frame = sprite.frame
@@ -82,6 +82,12 @@ func _aim_process(_delta: float) -> void:
 	sprite.scale.x = -1 if _player.global_position.x < global_position.x else 1
 
 func _aim_end() -> void:
+	_shoot()
+	
+	arm.hide()
+
+
+func _shoot() -> void:
 	var new_bullet := preload("res://entities/hitscan-bullet/bullet.tscn").instantiate()
 	var dir := global_position.direction_to(_player.global_position)
 	
@@ -90,8 +96,6 @@ func _aim_end() -> void:
 	new_bullet.shooter = self
 	
 	GameManager.world.add_child(new_bullet)
-	
-	arm.hide()
 
 
 func _on_aim_timeout() -> void:
@@ -106,7 +110,8 @@ func _on_death() -> void:
 	var corpse = preload("res://entities/corpse/corpse.tscn").instantiate()
 	corpse.global_position = global_position
 	corpse.velocity = damage_manager.previous_kb * 150
-	GameManager.world.add_child(corpse)
-#	corpse.set_sprite(preload("res://assets/entities/employee_corpse.png"))
+	GameManager.world.call_deferred("add_child", corpse)
+	await get_tree().process_frame
+	corpse.set_sprite(preload("res://assets/entities/employee_corpse.png"))
 	
 	queue_free()

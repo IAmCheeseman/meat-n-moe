@@ -6,6 +6,8 @@ extends CharacterBody2D
 @onready var shadow = $Shadow
 @onready var health_vignette = $CanvasLayer/Health
 
+@onready var weapons = $Sprite/Weapons
+
 @onready var roll_timer := $Timers/Roll
 
 @onready var damage_manager := $DamageManager
@@ -38,6 +40,8 @@ var _s_roll = State.new(
 )
 var _state_machine = StateMachine.new(_s_default)
 
+var current_weapon := 0
+
 
 func add_blood(enemy: Node2D) -> void:
 	if enemy.global_position.distance_to(global_position) < 32:
@@ -52,10 +56,13 @@ func _get_input_dir() -> Vector2:
 func _is_state(to: String) -> bool:
 	return _state_machine.get_state_name() == to
 
+func _update_weapons() -> void:
+	for i in weapons.get_children().size():
+		weapons.get_child(i).visible = i == current_weapon
+
 
 func _ready() -> void:
 	shadow.texture = ShadowGenerator.generate(sprite.texture.get_width())
-
 
 func _physics_process(delta: float) -> void:
 	_state_machine.process(delta)
@@ -76,6 +83,12 @@ func _physics_process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("roll") and _is_state("default") and _get_input_dir() != Vector2.ZERO:
 		_state_machine.change_state(_s_roll)
+		return
+	
+	if event.is_action("scroll_weapons_up") or event.is_action("scroll_weapons_down"):
+		var scroll = Input.get_axis("scroll_weapons_up", "scroll_weapons_down")
+		current_weapon = wrapi(current_weapon + scroll, 0, weapons.get_child_count())
+		_update_weapons()
 
 
 func _default_process(delta: float) -> void:

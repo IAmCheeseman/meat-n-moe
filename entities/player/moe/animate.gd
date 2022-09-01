@@ -9,7 +9,7 @@ func bob(delta: float, speed: float=1.0, amp: float=1.0, height: float=0.0):
 	var sine = sin(time * speed) * amp
 	
 	sprite.position.y = lerp(sprite.position.y, sine - height, 16 * delta)
-	sprite.rotation = move_toward(sprite.rotation, deg2rad(player.velocity.x / 25), 16 * delta)
+	sprite.rotation = move_toward(sprite.rotation, deg_to_rad(player.velocity.x / 25), 16 * delta)
 
 
 func roll(delta: float, percentage: float) -> void:

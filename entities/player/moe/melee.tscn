@@ -1,0 +1,160 @@
+[gd_scene load_steps=9 format=3 uid="uid://o3bwmnsmu6lw"]
+
+[ext_resource type="Script" path="res://entities/player/moe/melee.gd" id="1_oydhk"]
+[ext_resource type="Texture2D" uid="uid://3lteaple4mkx" path="res://assets/entities/moe_sword.png" id="2_i81n3"]
+[ext_resource type="PackedScene" uid="uid://dx4l162npnd6g" path="res://tools/hit-and-hurt-boxes/hitbox.tscn" id="3_euly0"]
+[ext_resource type="Texture2D" uid="uid://b8itqvc41o21c" path="res://assets/entities/moe_swing.png" id="4_gtt3r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hbgoh"]
+size = Vector2(29.5, 20)
+
+[sub_resource type="Animation" id="Animation_xagh0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hitbox/CollisionShape:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hitbox/Swing:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_kc05f"]
+resource_name = "swing"
+length = 0.35
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hitbox/CollisionShape:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hitbox/Swing:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hitbox/Swing:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0dyso"]
+_data = {
+"RESET": SubResource("Animation_xagh0"),
+"swing": SubResource("Animation_kc05f")
+}
+
+[node name="Melee" type="Node2D"]
+visible = false
+script = ExtResource("1_oydhk")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+rotation = 0.937242
+texture = ExtResource("2_i81n3")
+offset = Vector2(7, -3)
+
+[node name="Hitbox" parent="." instance=ExtResource("3_euly0")]
+collision_mask = 4
+damage = 1.5
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(15.25, 0)
+shape = SubResource("RectangleShape2D_hbgoh")
+disabled = true
+
+[node name="Swing" type="Sprite2D" parent="Hitbox"]
+position = Vector2(8, 0)
+texture = ExtResource("4_gtt3r")
+offset = Vector2(14, 0)
+hframes = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0dyso")
+}

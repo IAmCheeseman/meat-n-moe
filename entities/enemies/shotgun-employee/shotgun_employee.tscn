@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://bpkfj0be0g0xi"]
+
+[ext_resource type="PackedScene" uid="uid://bxuvwabyf1kn8" path="res://entities/enemies/employee/employee.tscn" id="1_18bjg"]
+[ext_resource type="Texture2D" uid="uid://bcdcls1u1ddwb" path="res://assets/entities/shotgun_employee.png" id="2_12i3p"]
+[ext_resource type="Texture2D" uid="uid://cfaldj117pm61" path="res://assets/entities/shotgun_employee_gun.png" id="2_78rhs"]
+[ext_resource type="Script" path="res://entities/enemies/shotgun-employee/shotgun_employee.gd" id="2_srwa5"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bp383"]
+height = 20.0
+
+[node name="ShotgunEmployee" instance=ExtResource("1_18bjg")]
+script = ExtResource("2_srwa5")
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("2_12i3p")
+offset = Vector2(0, -10)
+
+[node name="Arm" parent="Sprite" index="0"]
+position = Vector2(7, -10)
+
+[node name="Sprite" parent="Sprite/Arm" index="0"]
+position = Vector2(6, -1)
+texture = ExtResource("2_78rhs")
+
+[node name="CollisionShape2D" parent="Collisions/Hurtbox" index="0"]
+shape = SubResource("CapsuleShape2D_bp383")
+
+[node name="DamageManager" parent="." index="4"]
+max_health = 2.0
