@@ -15,9 +15,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("secondary_action") and timer.is_stopped():
 		var new_boomerang = preload("res://entities/player/moe/boomerang_projectile.tscn").instantiate()
+		var dir = global_position.direction_to(get_global_mouse_position())
 		new_boomerang.player = $".."
-		new_boomerang.global_position = global_position
-		new_boomerang.velocity = global_position.direction_to(get_global_mouse_position())
+		new_boomerang.global_position = global_position + dir * 16
+		new_boomerang.velocity = dir
 		
 		GameManager.world.add_child(new_boomerang)
 		

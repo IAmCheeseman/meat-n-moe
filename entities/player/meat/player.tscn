@@ -1,18 +1,16 @@
-[gd_scene load_steps=18 format=3 uid="uid://pwuylhkc33bh"]
+[gd_scene load_steps=16 format=3 uid="uid://dbwwkk2lo6n1u"]
 
-[ext_resource type="Script" path="res://entities/player/moe/player.gd" id="1_5dugi"]
-[ext_resource type="Script" path="res://entities/player/moe/animate.gd" id="2_x5t0t"]
-[ext_resource type="Texture2D" uid="uid://tk4ukkg7wk5b" path="res://assets/entities/moe.png" id="3_kq5nx"]
+[ext_resource type="Script" path="res://entities/player/meat/player.gd" id="1_ukk7d"]
+[ext_resource type="Texture2D" uid="uid://dmyiyhbiv2e54" path="res://assets/entities/meat.png" id="3_h47v7"]
 [ext_resource type="Shader" path="res://assets/blood.gdshader" id="4_4rq8x"]
 [ext_resource type="Texture2D" uid="uid://j62k70plt7i8" path="res://assets/blood_noise.tres" id="4_7xsrt"]
-[ext_resource type="Texture2D" uid="uid://ckccmvwkjddqx" path="res://assets/entities/moe_bloody.png" id="5_imny8"]
-[ext_resource type="PackedScene" uid="uid://djb4vg80da4om" path="res://entities/player/moe/gun.tscn" id="6_5hlaf"]
+[ext_resource type="Texture2D" uid="uid://bw5gvws1r7agw" path="res://assets/entities/meat_bloody.png" id="6_15sqc"]
 [ext_resource type="PackedScene" uid="uid://js1bpqxxd18t" path="res://tools/hit-and-hurt-boxes/hurtbox.tscn" id="6_jgqc7"]
-[ext_resource type="PackedScene" uid="uid://cjyhbs6t0x0xn" path="res://entities/player/moe/hook.tscn" id="7_ao2k4"]
+[ext_resource type="PackedScene" uid="uid://re0isefnqy5a" path="res://entities/player/meat/gun.tscn" id="6_l3amo"]
+[ext_resource type="PackedScene" uid="uid://dknqm6lu3g8os" path="res://entities/player/meat/fist.tscn" id="7_83ml1"]
 [ext_resource type="Script" path="res://tools/damage-manager/damage_manager.gd" id="7_i625j"]
-[ext_resource type="PackedScene" uid="uid://o3bwmnsmu6lw" path="res://entities/player/moe/melee.tscn" id="8_cirhg"]
 [ext_resource type="Shader" path="res://entities/player/moe/health.gdshader" id="8_wbss7"]
-[ext_resource type="Script" path="res://entities/player/moe/boomerang.gd" id="9_0xd21"]
+[ext_resource type="AnimationLibrary" uid="uid://bg0k3lqo0t2nk" path="res://entities/player/meat/meat_animations.res" id="9_juyhy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pfjri"]
 radius = 2.0
@@ -34,16 +32,11 @@ amp = 0.0
 z_index = 3
 y_sort_enabled = true
 collision_layer = 2
-script = ExtResource("1_5dugi")
+script = ExtResource("1_ukk7d")
 accel = 400.0
 frict = 700.0
-roll_speed = 200.0
-roll_time = 0.4
 regen_rate = 0.5
 blood_reduce_rate = 0.05
-
-[node name="Animation" type="Node2D" parent="."]
-script = ExtResource("2_x5t0t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -56,27 +49,25 @@ smoothing_enabled = true
 smoothing_speed = 20.0
 
 [node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("3_kq5nx")
+position = Vector2(0, -7)
+texture = ExtResource("3_h47v7")
+hframes = 6
+vframes = 2
 
 [node name="Blood" type="Sprite2D" parent="Sprite"]
 material = SubResource("ShaderMaterial_etbls")
-texture = ExtResource("5_imny8")
+texture = ExtResource("6_15sqc")
+hframes = 6
+vframes = 2
 
 [node name="Weapons" type="Node2D" parent="Sprite"]
 
-[node name="Hook" parent="Sprite/Weapons" instance=ExtResource("7_ao2k4")]
+[node name="Gun" parent="Sprite/Weapons" instance=ExtResource("6_l3amo")]
 
-[node name="Gun" parent="Sprite/Weapons" instance=ExtResource("6_5hlaf")]
-
-[node name="Melee" parent="Sprite/Weapons" instance=ExtResource("8_cirhg")]
-
-[node name="Boomerang" type="Node2D" parent="Sprite/Weapons"]
-script = ExtResource("9_0xd21")
-cooldown = 1
+[node name="Fist" parent="Sprite/Weapons" instance=ExtResource("7_83ml1")]
 
 [node name="Shadow" type="Sprite2D" parent="."]
 show_behind_parent = true
-position = Vector2(0, 3)
 z_index = -1
 
 [node name="Collision" type="Node2D" parent="."]
@@ -88,14 +79,14 @@ collision_layer = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Collision/Hurtbox"]
 shape = SubResource("CircleShape2D_k7ruj")
 
+[node name="TeleportRayCast" type="RayCast2D" parent="Collision"]
+
 [node name="DamageManager" type="Node" parent="."]
 script = ExtResource("7_i625j")
 hurtbox_path = NodePath("../Collision/Hurtbox")
 is_enemy = false
 
 [node name="Timers" type="Node" parent="."]
-
-[node name="Roll" type="Timer" parent="Timers"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -107,6 +98,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[connection signal="hook_hit" from="Sprite/Weapons/Hook" to="." method="_on_hook_hit"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"meat_animations": ExtResource("9_juyhy")
+}
+
 [connection signal="dead" from="DamageManager" to="." method="_on_damage_manager_dead"]
-[connection signal="timeout" from="Timers/Roll" to="." method="_on_roll_timeout"]

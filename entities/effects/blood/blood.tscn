@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ph4gexltee2h" path="res://assets/effects/blood.png" id="1_vycd5"]
 
 [node name="Blood" type="Sprite2D"]
-modulate = Color(0.764706, 0.14902, 0.117647, 0.694118)
+modulate = Color(0.764706, 0.14902, 0.117647, 0.847059)
 z_index = -2
 texture = ExtResource("1_vycd5")
 hframes = 3

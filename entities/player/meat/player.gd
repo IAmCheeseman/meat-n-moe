@@ -2,29 +2,23 @@ extends CharacterBody2D
 
 @onready var sprite := $Sprite
 @onready var blood := $Sprite/Blood
-@onready var animation := $Animation
+@onready var anim := $AnimationPlayer
 @onready var shadow = $Shadow
 @onready var health_vignette = $CanvasLayer/Health
 
 @onready var weapons = $Sprite/Weapons
-@onready var hook := $Sprite/Weapons/Hook
-
-@onready var roll_timer := $Timers/Roll
 
 @onready var damage_manager := $DamageManager
+
+@onready var teleport_rc := $Collision/TeleportRayCast
 
 @export_category("Movement")
 @export var speed := 150.0
 @export var accel := 300.0
 @export var frict := 300.0
 
-@export_subgroup("Roll", "roll")
-@export var roll_speed := 300.0
-@export var roll_time := 0.3
-@export var roll_velocity_reduce := 0.5
-
-@export_subgroup("Hook", "hook")
-@export var hook_speed := 500.0
+@export_subgroup("Teleport", "teleport")
+@export var teleport_distance := 32.0
 
 @export_category("Health")
 @export var regen_rate := 1.0
@@ -35,18 +29,6 @@ extends CharacterBody2D
 var _s_default = State.new(
 	"default",
 	Callable(self, "_default_process")
-)
-var _s_roll = State.new(
-	"roll",
-	Callable(self, "_roll_process"),
-	Callable(self, "_roll_ready"),
-	Callable(self, "_roll_end")
-)
-var _s_hook = State.new(
-	"hook",
-	Callable(self, "_hook_process"),
-	Callable(self, "_hook_start"),
-	Callable(self, "_hook_end")
 )
 var _state_machine = StateMachine.new(_s_default)
 
@@ -69,8 +51,9 @@ func _is_state(to: String) -> bool:
 	return _state_machine.get_state_name() == to
 
 
+
 func _ready() -> void:
-	shadow.texture = ShadowGenerator.generate(sprite.texture.get_width())
+	shadow.texture = ShadowGenerator.generate(sprite.texture.get_width() / sprite.hframes)
 
 func _physics_process(delta: float) -> void:
 	_state_machine.process(delta)
@@ -82,16 +65,34 @@ func _physics_process(delta: float) -> void:
 	var percentage_down = 1 - damage_manager.health / damage_manager.max_health
 	health_vignette.material.set_shader_uniform("amp", percentage_down)
 	
+	blood.frame = sprite.frame
 	if velocity != Vector2.ZERO:
 		blood.material.set_shader_uniform(
 			"amount",
 			clamp(blood.material.get_shader_uniform("amount") - blood_reduce_rate * delta, 0.0, 0.8)
 		)
+		anim.play("meat_animations/Walk")
+	else:
+		anim.play("meat_animations/Idle")
+
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("roll") and _is_state("default") and _get_input_dir() != Vector2.ZERO:
-		_state_machine.change_state(_s_roll)
-		return
+	if event.is_action_pressed("roll"):
+		var dir = _get_input_dir()
+		var teleport_target_position = global_position + dir * teleport_distance
+		
+		for i in 24:
+			var new_blood = preload("res://entities/effects/blood/blood.tscn").instantiate()
+			var blood_dir = Vector2.RIGHT.rotated(TAU * randf())
+			new_blood.global_position = global_position + blood_dir * randf_range(0, 32)
+			GameManager.world.add_child(new_blood)
+		
+		blood.material.set_shader_uniform(
+			"amount",
+			clamp(blood.material.get_shader_uniform("amount") + 0.2, 0.0, 0.8)
+		)
+		
+		global_position = teleport_target_position
 
 
 func _default_process(delta: float) -> void:
@@ -101,46 +102,6 @@ func _default_process(delta: float) -> void:
 	velocity = velocity.move_toward(input_dir * speed, movement_delta * delta)
 	
 	move_and_slide()
-	
-	animation.bob(delta, 5 if velocity == Vector2.ZERO else 15, -1.5, 3)
-
-
-func _roll_ready() -> void:
-	velocity = _get_input_dir() * roll_speed
-	roll_timer.start(roll_time)
-
-func _roll_process(delta: float) -> void:
-	move_and_slide()
-	
-	animation.roll(delta, roll_timer.time_left / roll_timer.wait_time)
-
-func _roll_end() -> void:
-	velocity *= roll_velocity_reduce
-
-func _on_roll_timeout() -> void:
-	_state_machine.change_state(_s_default)
-
-
-func _hook_start() -> void:
-	pass
-
-func _hook_process(delta: float) -> void:
-	velocity = global_position.direction_to(target_hook_position) * hook_speed
-	move_and_slide()
-	
-	if global_position.distance_to(target_hook_position) < 20 or test_move(transform, velocity.normalized() * 10):
-		_state_machine.change_state(_s_default)
-	update()
-
-func _hook_end() -> void:
-	hook.hide()
-	hook.state_machine.change_state(hook._s_idle)
-	
-	velocity /= 5
-
-func _on_hook_hit(end_position: Vector2) -> void:
-	target_hook_position = end_position
-	_state_machine.change_state(_s_hook)
 
 
 func _on_damage_manager_dead() -> void:

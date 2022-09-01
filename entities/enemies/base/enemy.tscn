@@ -10,9 +10,7 @@ radius = 5.0
 
 [node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
 y_sort_enabled = true
-collision_layer = 0
-moving_platform_apply_velocity_on_leave = 2
-moving_platform_floor_layers = 0
+collision_layer = 16
 script = ExtResource("1_13r02")
 
 [node name="Sprite" type="Sprite2D" parent="."]

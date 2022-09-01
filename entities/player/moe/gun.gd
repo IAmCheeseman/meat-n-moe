@@ -1,4 +1,7 @@
 extends Node2D
+class_name Gun
+
+@onready var player := $"../../../"
 
 @onready var sprite := $Sprite
 @onready var anim := $AnimationPlayer
@@ -36,4 +39,6 @@ func _shoot() -> void:
 	GameManager.world.add_child(new_bullet)
 	
 	cooldown.start()
+	
+	player.velocity -= dir * 100
 
