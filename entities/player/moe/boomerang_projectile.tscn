@@ -1,0 +1,90 @@
+[gd_scene load_steps=9 format=3 uid="uid://3ryn8nvme822"]
+
+[ext_resource type="Script" path="res://entities/player/moe/boomerang_projectile.gd" id="1_c4al0"]
+[ext_resource type="Texture2D" uid="uid://8pn4f22uxto0" path="res://assets/entities/moe_boomerang.png" id="2_spfki"]
+[ext_resource type="PackedScene" uid="uid://dx4l162npnd6g" path="res://tools/hit-and-hurt-boxes/hitbox.tscn" id="3_lni1i"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ji7c2"]
+radius = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g4j5x"]
+radius = 4.0
+
+[sub_resource type="Animation" id="Animation_g08yg"]
+resource_name = "GoAway"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_u68r8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uacqt"]
+_data = {
+"GoAway": SubResource("Animation_g08yg"),
+"RESET": SubResource("Animation_u68r8")
+}
+
+[node name="Boomerang" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_c4al0")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_spfki")
+
+[node name="RayCast" type="RayCast2D" parent="."]
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ji7c2")
+
+[node name="Hitbox" parent="." instance=ExtResource("3_lni1i")]
+collision_mask = 4
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_g4j5x")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_uacqt")
+}
+
+[node name="OutTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+autostart = true

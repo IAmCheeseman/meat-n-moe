@@ -9,6 +9,11 @@
 config_version=5
 
 _global_script_classes=[{
+"base": "Node2D",
+"class": &"BoomerangControls",
+"language": &"GDScript",
+"path": "res://entities/player/moe/boomerang.gd"
+}, {
 "base": "Node",
 "class": &"DamageManager",
 "language": &"GDScript",
@@ -40,6 +45,7 @@ _global_script_classes=[{
 "path": "res://tools/state-machine/state_machine.gd"
 }]
 _global_script_class_icons={
+"BoomerangControls": "",
 "DamageManager": "",
 "Employee": "",
 "Enemy": "",

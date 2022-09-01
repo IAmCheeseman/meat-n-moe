@@ -4,6 +4,7 @@
 
 [node name="Hitbox" type="Area2D" groups=["hitbox"]]
 collision_layer = 0
+monitorable = false
 script = ExtResource("1_o5v8l")
 
 [connection signal="area_entered" from="." to="." method="_on_hitbox_area_entered"]

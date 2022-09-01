@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://pwuylhkc33bh"]
+[gd_scene load_steps=17 format=3 uid="uid://pwuylhkc33bh"]
 
 [ext_resource type="Script" path="res://entities/player/moe/player.gd" id="1_5dugi"]
 [ext_resource type="Script" path="res://entities/player/moe/animate.gd" id="2_x5t0t"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://tools/damage-manager/damage_manager.gd" id="7_i625j"]
 [ext_resource type="PackedScene" uid="uid://o3bwmnsmu6lw" path="res://entities/player/moe/melee.tscn" id="8_cirhg"]
 [ext_resource type="Shader" path="res://entities/player/moe/health.gdshader" id="8_wbss7"]
+[ext_resource type="Script" path="res://entities/player/moe/boomerang.gd" id="9_0xd21"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pfjri"]
 radius = 2.0
@@ -64,6 +65,9 @@ texture = ExtResource("5_imny8")
 [node name="Gun" parent="Sprite/Weapons" instance=ExtResource("6_5hlaf")]
 
 [node name="Melee" parent="Sprite/Weapons" instance=ExtResource("8_cirhg")]
+
+[node name="Boomerang" type="Node2D" parent="Sprite/Weapons"]
+script = ExtResource("9_0xd21")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 show_behind_parent = true

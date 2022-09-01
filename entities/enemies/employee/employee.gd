@@ -29,6 +29,13 @@ func _process(_delta: float) -> void:
 
 
 func _idle_process(delta: float) -> void:
+	var target_vel = global_position.direction_to(target_position) * speed
+	if global_position.distance_to(target_position) < aim_dist:
+		target_vel = Vector2.ZERO
+	velocity = velocity.move_toward(
+		target_vel,
+		accel * delta
+	)
 	animation_player.play("employee_animations/Idle")
 	
 	velocity = velocity.move_toward(Vector2.ZERO, frict * delta)
