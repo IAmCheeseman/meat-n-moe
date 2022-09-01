@@ -72,6 +72,7 @@ script = ExtResource("9_0xd21")
 [node name="Shadow" type="Sprite2D" parent="."]
 show_behind_parent = true
 position = Vector2(0, 3)
+z_index = -1
 
 [node name="Collision" type="Node2D" parent="."]
 
