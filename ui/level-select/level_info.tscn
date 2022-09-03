@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://kdsyn75e8imh"]
+
+[ext_resource type="Script" path="res://ui/level-select/level_info.gd" id="1_2577u"]
+[ext_resource type="Texture2D" uid="uid://dko6bdbplcyy6" path="res://assets/ui/level_pointer.png" id="1_n36gt"]
+[ext_resource type="Theme" uid="uid://cmvj8p1hux406" path="res://assets/ui/theme.tres" id="3_faoub"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1ty5a"]
+font_size = 8
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_iij0r"]
+font_size = 8
+font_color = Color(0.615686, 0.615686, 0.615686, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(0, 1)
+
+[node name="LevelSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_faoub")
+script = ExtResource("1_2577u")
+
+[node name="HBox" type="HBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Pointer" type="TextureRect" parent="HBox"]
+offset_right = 10.0
+offset_bottom = 40.0
+texture = ExtResource("1_n36gt")
+stretch_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="HBox"]
+offset_left = 14.0
+offset_right = 212.0
+offset_bottom = 40.0
+
+[node name="LevelSelectTitle" type="Label" parent="HBox/VBox"]
+unique_name_in_owner = true
+offset_right = 198.0
+offset_bottom = 13.0
+text = "Mandatory Meating"
+label_settings = SubResource("LabelSettings_1ty5a")
+
+[node name="Margin" type="MarginContainer" parent="HBox/VBox"]
+offset_top = 17.0
+offset_right = 198.0
+offset_bottom = 30.0
+theme_override_constants/margin_left = 8
+
+[node name="LevelSelectDesc" type="Label" parent="HBox/VBox/Margin"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 0)
+offset_left = 8.0
+offset_right = 198.0
+offset_bottom = 13.0
+text = "Beat some guys up."
+label_settings = SubResource("LabelSettings_iij0r")
+autowrap_mode = 3

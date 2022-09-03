@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://pqyyxhfetlwp"]
+
+[ext_resource type="Script" path="res://ui/level-select/level_block.gd" id="1_8ykii"]
+[ext_resource type="Shader" path="res://ui/level-select/level_block.gdshader" id="2_e0whk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f5q2d"]
+shader = ExtResource("2_e0whk")
+add_margins = true
+color = Color(1, 1, 1, 1)
+inside = false
+pattern = 0
+width = 0
+
+[node name="LevelBlock" type="Node2D"]
+script = ExtResource("1_8ykii")
+boss = null
+level_texture = null
+
+[node name="Sprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_f5q2d")

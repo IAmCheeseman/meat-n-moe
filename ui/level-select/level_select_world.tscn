@@ -1,0 +1,360 @@
+[gd_scene load_steps=26 format=3 uid="uid://c08e53q6rpkjg"]
+
+[ext_resource type="Texture2D" uid="uid://3epg84smc3lk" path="res://assets/ui/level_select_background.png" id="1_4x5ir"]
+[ext_resource type="PackedScene" uid="uid://pqyyxhfetlwp" path="res://ui/level-select/level_block.tscn" id="2_4fnqf"]
+[ext_resource type="Texture2D" uid="uid://ds46mh17wmsm7" path="res://assets/ui/building_level_ground_1.png" id="2_fnww0"]
+[ext_resource type="Texture2D" uid="uid://d3xrujprvcseh" path="res://assets/ui/building_level_ground_0.png" id="2_u8ng6"]
+[ext_resource type="PackedScene" uid="uid://kdsyn75e8imh" path="res://ui/level-select/level_info.tscn" id="3_bbcyp"]
+[ext_resource type="Script" path="res://ui/level-select/level_info_mover.gd" id="3_tboqb"]
+[ext_resource type="Texture2D" uid="uid://lptr2k2i85ek" path="res://assets/ui/building_leve_post_office_0.png" id="4_7h4mx"]
+[ext_resource type="Texture2D" uid="uid://b388tdgttq88q" path="res://assets/ui/building_level_high_level.png" id="5_a26hp"]
+[ext_resource type="Texture2D" uid="uid://b6p4sprbkc8x4" path="res://assets/ui/building_level_lab.png" id="5_j6phs"]
+[ext_resource type="Texture2D" uid="uid://3jmhwmu8pwpx" path="res://assets/ui/drone.png" id="5_nnrl0"]
+[ext_resource type="Texture2D" uid="uid://c6rsasd07db0o" path="res://assets/logo.png" id="5_uko2u"]
+[ext_resource type="Texture2D" uid="uid://shde526p0uy" path="res://assets/ui/level_sky.png" id="6_2q3lh"]
+[ext_resource type="Texture2D" uid="uid://cu4348aeo25kj" path="res://assets/ui/level_clouds.png" id="6_kexi5"]
+[ext_resource type="Texture2D" uid="uid://c8afmx1qv7gim" path="res://assets/ui/level_mountains.png" id="6_kue1t"]
+[ext_resource type="Texture2D" uid="uid://bdf8d0ahdwp1x" path="res://assets/ui/building_level_ceo.png" id="6_mq538"]
+[ext_resource type="Texture2D" uid="uid://o31jqxrhgtns" path="res://assets/ui/level_city.png" id="9_sl7ay"]
+
+[sub_resource type="Curve" id="Curve_qkwth"]
+_data = [Vector2(0.923954, 1), 0.0, -13.15, 0, 1, Vector2(1, 0), -13.15, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wscqh"]
+curve = SubResource("Curve_qkwth")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ichq7"]
+emission_shape = 3
+emission_box_extents = Vector3(28, 0, 1)
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.1
+orbit_velocity_max = 0.1
+scale_curve = SubResource("CurveTexture_wscqh")
+color = Color(0, 0, 0, 1)
+turbulence_noise_strength = 7.71
+turbulence_noise_scale = 8.23
+turbulence_noise_speed = Vector3(1, 1, 0.5)
+turbulence_influence_max = 1.0
+turbulence_initial_displacement_min = -28.1
+turbulence_initial_displacement_max = 39.1
+
+[sub_resource type="Animation" id="Animation_ac45t"]
+resource_name = "Idle"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../CanvasLayer/Control/Margin/HBox/Logo:custom_minimum_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.6),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(150, 87), Vector2(150, 95)]
+}
+
+[sub_resource type="Animation" id="Animation_y7vel"]
+resource_name = "In"
+length = 3.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1, 3.5),
+"transitions": PackedFloat32Array(-2.73208, 1),
+"update": 0,
+"values": [Vector2(48, -330), Vector2(48, -11)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CanvasLayer/Control/Margin/HBox/Logo:custom_minimum_size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1, 3.5),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector2(320, 180), Vector2(150, 87)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimationPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(3.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["Idle", -1, 1.0, false],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_dvdcy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(48, -11)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CanvasLayer/Control/Margin/HBox/Logo:custom_minimum_size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(320, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k3kj4"]
+_data = {
+"Idle": SubResource("Animation_ac45t"),
+"In": SubResource("Animation_y7vel"),
+"RESET": SubResource("Animation_dvdcy")
+}
+
+[sub_resource type="Gradient" id="Gradient_p1r8t"]
+interpolation_mode = 1
+colors = PackedColorArray(0.811765, 0.313726, 0.203922, 1, 0.811765, 0.615686, 0.423529, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ijjye"]
+gradient = SubResource("Gradient_p1r8t")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[node name="LevelSelectWorld" type="Node2D"]
+
+[node name="Buildings" type="Node2D" parent="."]
+
+[node name="LevelBlock1" parent="Buildings" instance=ExtResource("2_4fnqf")]
+position = Vector2(58, 149)
+boss = false
+level_name = "Meat n' Moe"
+level_desc = "Meat meets Moe, they decide to commit mass murder."
+level_texture = ExtResource("2_u8ng6")
+
+[node name="LevelBlock2" parent="Buildings" instance=ExtResource("2_4fnqf")]
+position = Vector2(58, 122)
+z_index = 1
+boss = false
+level_name = "Meat n' Moe's First Encounter"
+level_desc = "Meat and Moe find that not everyone takes kindly to mass murder."
+level = "res://world/levels/level_1a.tscn"
+level_texture = ExtResource("2_fnww0")
+
+[node name="LevelBlock3" parent="Buildings" instance=ExtResource("2_4fnqf")]
+position = Vector2(58, 95)
+z_index = 1
+boss = true
+level_name = "Mandatory Meating"
+level_desc = "There's a meeting going on, so Meat n' Moe mass murder in there."
+level_texture = ExtResource("2_fnww0")
+
+[node name="LevelBlock4" parent="Buildings" instance=ExtResource("2_4fnqf")]
+position = Vector2(58, 68)
+z_index = 1
+boss = false
+level_name = "The Mailmen"
+level_desc = "Apparently there's a post office in this building to mass murder."
+level_texture = ExtResource("4_7h4mx")
+
+[node name="LevelBlock5" parent="Buildings" instance=ExtResource("2_4fnqf")]
+position = Vector2(58, 41)
+z_index = 1
+boss = true
+level_name = "Moe More Mailmen"
+level_desc = "The postmaster isn't happy that Meat n' Moe mass murdered his mailmen."
+level_texture = ExtResource("4_7h4mx")
+
+[node name="LevelBlock6" parent="Buildings" instance=ExtResource("2_4fnqf")]
+position = Vector2(58, 14)
+z_index = 1
+boss = false
+level_name = "The President of the US of A"
+level_desc = "The president doesn't like what Meat n' Moe are doing to this company, Meat n' Moe are gonna have to mass murder him too."
+level_texture = ExtResource("5_j6phs")
+
+[node name="LevelBlock7" parent="Buildings" instance=ExtResource("2_4fnqf")]
+position = Vector2(58, -13)
+z_index = 1
+boss = true
+level_name = "Steak"
+level_desc = "OH NO! It's Juice Baby! He's Meat's arch nemisis. Welp, time to mass murder him."
+level_texture = ExtResource("5_j6phs")
+
+[node name="LevelBlock8" parent="Buildings" instance=ExtResource("2_4fnqf")]
+position = Vector2(58, -40)
+z_index = 1
+boss = false
+level_name = "War"
+level_desc = "Apparently the president *really* did not like what Meat n' Moe did. Gotta mass murder those tanks and helicopters now."
+level_texture = ExtResource("5_a26hp")
+
+[node name="LevelBlock9" parent="Buildings" instance=ExtResource("2_4fnqf")]
+position = Vector2(58, -75)
+z_index = 1
+boss = true
+level_name = "The CEO, John Yohn John John VI"
+level_desc = "Time for Meat n' Moe's justice, THE CEO IS GONNA BE MASS MURDERED."
+level_texture = ExtResource("6_mq538")
+
+[node name="Drones" type="GPUParticles2D" parent="Buildings/LevelBlock9"]
+position = Vector2(-2, -18)
+z_index = 2
+amount = 12
+lifetime = 8.0
+preprocess = 8.0
+fixed_fps = 15
+process_material = SubResource("ParticleProcessMaterial_ichq7")
+texture = ExtResource("5_nnrl0")
+
+[node name="Ground" type="Sprite2D" parent="."]
+z_index = 2
+texture = ExtResource("1_4x5ir")
+centered = false
+
+[node name="Ground" type="ColorRect" parent="Ground"]
+offset_left = -23.0
+offset_top = 172.0
+offset_right = 344.0
+offset_bottom = 426.0
+color = Color(0.333333, 0.454902, 0.576471, 1)
+
+[node name="LevelInfo" type="Node2D" parent="."]
+position = Vector2(112, 135)
+z_index = 3
+script = ExtResource("3_tboqb")
+
+[node name="LevelSelect" parent="LevelInfo" instance=ExtResource("3_bbcyp")]
+offset_left = -4.0
+offset_top = 2.0
+offset_right = -4.0
+offset_bottom = 2.0
+
+[node name="Camera" type="Camera2D" parent="LevelInfo"]
+position = Vector2(48, -11)
+current = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LevelInfo"]
+autoplay = "In"
+libraries = {
+"": SubResource("AnimationLibrary_k3kj4")
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Margin" type="MarginContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -330.0
+offset_bottom = 92.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+metadata/_edit_lock_ = true
+
+[node name="HBox" type="HBoxContainer" parent="CanvasLayer/Control/Margin"]
+layout_mode = 2
+offset_top = 5.0
+offset_right = 320.0
+offset_bottom = 92.0
+grow_horizontal = 2
+alignment = 2
+metadata/_edit_lock_ = true
+
+[node name="Logo" type="TextureRect" parent="CanvasLayer/Control/Margin/HBox"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+offset_right = 320.0
+offset_bottom = 87.0
+texture = ExtResource("5_uko2u")
+stretch_mode = 3
+metadata/_edit_lock_ = true
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer"]
+scroll_offset = Vector2(0, 10)
+
+[node name="ParallaxLayerSky" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
+motion_scale = Vector2(1, 0.15)
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="LevelSky" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayerSky"]
+position = Vector2(160, 11)
+texture = ExtResource("6_2q3lh")
+
+[node name="Sky" type="TextureRect" parent="CanvasLayer/ParallaxBackground/ParallaxLayerSky/LevelSky"]
+offset_left = -182.0
+offset_top = -371.0
+offset_right = 185.0
+offset_bottom = -88.0
+texture = SubResource("GradientTexture2D_ijjye")
+
+[node name="ParallaxLayerMountains" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
+motion_scale = Vector2(1, 0.5)
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="LevelMountains" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayerMountains"]
+position = Vector2(160, 41)
+texture = ExtResource("6_kue1t")
+
+[node name="ParallaxLayerClouds" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
+motion_scale = Vector2(1, 0.75)
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="LevelClouds" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayerClouds"]
+position = Vector2(160.167, 72.9004)
+texture = ExtResource("6_kexi5")
+
+[node name="ParallaxLayerCity" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
+motion_scale = Vector2(1, 0.9)
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="LevelCity" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayerCity"]
+position = Vector2(160, 76)
+texture = ExtResource("9_sl7ay")
+
+[connection signal="selected" from="Buildings/LevelBlock1" to="LevelInfo" method="_on_new_node_selected"]
+[connection signal="selected" from="Buildings/LevelBlock2" to="LevelInfo" method="_on_new_node_selected"]
+[connection signal="selected" from="Buildings/LevelBlock3" to="LevelInfo" method="_on_new_node_selected"]
+[connection signal="selected" from="Buildings/LevelBlock4" to="LevelInfo" method="_on_new_node_selected"]
+[connection signal="selected" from="Buildings/LevelBlock5" to="LevelInfo" method="_on_new_node_selected"]
+[connection signal="selected" from="Buildings/LevelBlock6" to="LevelInfo" method="_on_new_node_selected"]
+[connection signal="selected" from="Buildings/LevelBlock7" to="LevelInfo" method="_on_new_node_selected"]
+[connection signal="selected" from="Buildings/LevelBlock8" to="LevelInfo" method="_on_new_node_selected"]
+[connection signal="selected" from="Buildings/LevelBlock9" to="LevelInfo" method="_on_new_node_selected"]

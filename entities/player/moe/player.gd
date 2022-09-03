@@ -112,6 +112,8 @@ func _roll_ready() -> void:
 func _roll_process(delta: float) -> void:
 	move_and_slide()
 	
+	GameManager.camera.shake(1, 4, 4, 0.1, 0.1, false)
+	
 	animation.roll(delta, roll_timer.time_left / roll_timer.wait_time)
 
 func _roll_end() -> void:
@@ -131,6 +133,8 @@ func _hook_process(delta: float) -> void:
 	if global_position.distance_to(target_hook_position) < 20 or test_move(transform, velocity.normalized() * 10):
 		_state_machine.change_state(_s_default)
 	update()
+	
+	GameManager.camera.shake(1, 3, 3, 0.1, 0.1, false)
 
 func _hook_end() -> void:
 	hook.hide()
@@ -145,3 +149,8 @@ func _on_hook_hit(end_position: Vector2) -> void:
 
 func _on_damage_manager_dead() -> void:
 	get_tree().reload_current_scene()
+
+
+func _on_weapon_selected(node: Node2D) -> void:
+	for w in weapons.get_children():
+		w.visible = w == node

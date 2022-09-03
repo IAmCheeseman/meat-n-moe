@@ -19,3 +19,5 @@ func _shoot() -> void:
 		cooldown.start()
 		
 		player.velocity -= dir * 50
+		
+		GameManager.camera.shake(2, 8, 8, 0.6, 0.1, true)

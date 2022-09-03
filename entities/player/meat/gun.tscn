@@ -1,10 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://re0isefnqy5a"]
+[gd_scene load_steps=5 format=3 uid="uid://re0isefnqy5a"]
 
 [ext_resource type="PackedScene" uid="uid://djb4vg80da4om" path="res://entities/player/moe/gun.tscn" id="1_bywlf"]
 [ext_resource type="Script" path="res://entities/player/meat/gun.gd" id="2_etiuo"]
 [ext_resource type="Texture2D" uid="uid://ci1ijb4k8adw2" path="res://assets/entities/meat_gun.png" id="2_yooa8"]
+[ext_resource type="AudioStream" uid="uid://bjfoxv2ibtato" path="res://assets/sounds/shotgun.wav" id="4_l62bt"]
 
 [node name="Gun" instance=ExtResource("1_bywlf")]
+position = Vector2(0, 3)
 script = ExtResource("2_etiuo")
 
 [node name="Sprite" parent="." index="0"]
@@ -12,3 +14,6 @@ texture = ExtResource("2_yooa8")
 
 [node name="Cooldown" parent="." index="2"]
 wait_time = 0.9
+
+[node name="ShootSFX" parent="." index="3"]
+stream = ExtResource("4_l62bt")

@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://pwuylhkc33bh"]
+[gd_scene load_steps=19 format=3 uid="uid://pwuylhkc33bh"]
 
 [ext_resource type="Script" path="res://entities/player/moe/player.gd" id="1_5dugi"]
 [ext_resource type="Script" path="res://entities/player/moe/animate.gd" id="2_x5t0t"]
 [ext_resource type="Texture2D" uid="uid://tk4ukkg7wk5b" path="res://assets/entities/moe.png" id="3_kq5nx"]
+[ext_resource type="Script" path="res://tools/camera/camera.gd" id="3_xj2nf"]
 [ext_resource type="Shader" path="res://assets/blood.gdshader" id="4_4rq8x"]
 [ext_resource type="Texture2D" uid="uid://j62k70plt7i8" path="res://assets/blood_noise.tres" id="4_7xsrt"]
 [ext_resource type="Texture2D" uid="uid://ckccmvwkjddqx" path="res://assets/entities/moe_bloody.png" id="5_imny8"]
@@ -52,8 +53,8 @@ shape = SubResource("CapsuleShape2D_pfjri")
 
 [node name="Camera" type="Camera2D" parent="."]
 current = true
-smoothing_enabled = true
 smoothing_speed = 20.0
+script = ExtResource("3_xj2nf")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("3_kq5nx")
@@ -69,8 +70,10 @@ texture = ExtResource("5_imny8")
 [node name="Gun" parent="Sprite/Weapons" instance=ExtResource("6_5hlaf")]
 
 [node name="Melee" parent="Sprite/Weapons" instance=ExtResource("8_cirhg")]
+visible = false
 
 [node name="Boomerang" type="Node2D" parent="Sprite/Weapons"]
+visible = false
 script = ExtResource("9_0xd21")
 cooldown = 1
 
@@ -108,5 +111,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [connection signal="hook_hit" from="Sprite/Weapons/Hook" to="." method="_on_hook_hit"]
+[connection signal="selected" from="Sprite/Weapons/Gun" to="." method="_on_weapon_selected"]
+[connection signal="selected" from="Sprite/Weapons/Melee" to="." method="_on_weapon_selected"]
+[connection signal="selected" from="Sprite/Weapons/Boomerang" to="." method="_on_weapon_selected"]
 [connection signal="dead" from="DamageManager" to="." method="_on_damage_manager_dead"]
 [connection signal="timeout" from="Timers/Roll" to="." method="_on_roll_timeout"]

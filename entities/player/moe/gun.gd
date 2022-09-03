@@ -3,12 +3,16 @@ class_name Gun
 
 @onready var player := $"../../../"
 
+@onready var shoot_sfx := $ShootSFX
+
 @onready var sprite := $Sprite
-@onready var anim := $AnimationPlayer
 
 @onready var cooldown := $Cooldown
 
 @onready var shoot_position := $ShootPosition
+
+
+signal selected(node: Node2D)
 
 
 func _ready() -> void:
@@ -18,8 +22,9 @@ func _physics_process(delta: float) -> void:
 	look_at(get_global_mouse_position())
 	
 	if Input.is_action_pressed("main_action") and _can_shoot():
-		anim.stop()
-		anim.play("Shoot")
+		emit_signal("selected", self)
+		shoot_sfx.play()
+		shoot_sfx.pitch_scale = 1 - randf() / 4
 		_shoot()
 
 
@@ -41,4 +46,6 @@ func _shoot() -> void:
 	cooldown.start()
 	
 	player.velocity -= dir * 100
+	
+	GameManager.camera.shake(2, 8, 12, 0.1, 0.1, true, -dir)
 

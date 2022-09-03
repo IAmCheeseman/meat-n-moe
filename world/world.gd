@@ -3,4 +3,4 @@ extends Node2D
 
 func _ready() -> void:
 	GameManager.world = self
-	Pathfinder.generate_astar($Walls)
+	Pathfinder.generate_astar($Tilemap)

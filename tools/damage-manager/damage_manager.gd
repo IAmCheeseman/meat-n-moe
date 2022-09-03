@@ -18,6 +18,8 @@ var health := 0.0
 
 var previous_kb: Vector2
 
+var already_told_dead := false
+
 signal took_damage
 signal dead
 
@@ -31,7 +33,7 @@ func _ready() -> void:
 
 
 func take_damage(amt: float, kb: Vector2) -> void:
-	health -= amt / defense
+	health -= amt
 	parent.velocity += kb * kb_multiplier
 	
 	previous_kb = kb
@@ -48,7 +50,8 @@ func take_damage(amt: float, kb: Vector2) -> void:
 	if is_instance_valid(blood):
 		blood.material.set_shader_uniform("amount", 1 - health / max_health)
 	
-	if health <= 0:
+	if health <= 0 and !already_told_dead:
 		emit_signal("dead")
+		already_told_dead = true
 	
 	get_tree().call_group("player", "add_blood", parent)

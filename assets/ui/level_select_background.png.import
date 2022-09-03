@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3apr0rj2sh7p"
-path="res://.godot/imported/world-concept.png-f217e5723b3f080620ea9335e862a994.ctex"
+uid="uid://3epg84smc3lk"
+path="res://.godot/imported/level_select_background.png-a763db6cbd5dd5882ba6563c53ad9dc9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/world-concept.png"
-dest_files=["res://.godot/imported/world-concept.png-f217e5723b3f080620ea9335e862a994.ctex"]
+source_file="res://assets/ui/level_select_background.png"
+dest_files=["res://.godot/imported/level_select_background.png-a763db6cbd5dd5882ba6563c53ad9dc9.ctex"]
 
 [params]
 

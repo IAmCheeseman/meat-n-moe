@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://o3bwmnsmu6lw"]
+[gd_scene load_steps=11 format=3 uid="uid://o3bwmnsmu6lw"]
 
 [ext_resource type="Script" path="res://entities/player/moe/melee.gd" id="1_oydhk"]
 [ext_resource type="Texture2D" uid="uid://3lteaple4mkx" path="res://assets/entities/moe_sword.png" id="2_i81n3"]
 [ext_resource type="PackedScene" uid="uid://dx4l162npnd6g" path="res://tools/hit-and-hurt-boxes/hitbox.tscn" id="3_euly0"]
 [ext_resource type="Texture2D" uid="uid://b8itqvc41o21c" path="res://assets/entities/moe_swing.png" id="4_gtt3r"]
+[ext_resource type="AudioStream" uid="uid://fc38ictyceg1" path="res://assets/sounds/swing.wav" id="5_ly1tx"]
+[ext_resource type="AudioStream" uid="uid://bfni0s0roetxn" path="res://assets/sounds/slice.wav" id="6_qw06s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hbgoh"]
 size = Vector2(29.5, 20)
@@ -33,30 +35,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite:scale")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_kc05f"]
@@ -99,30 +77,6 @@ tracks/2/keys = {
 "update": 1,
 "values": [true, false]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Sprite:scale")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.35),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1, 1), Vector2(0, 0)]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0dyso"]
 _data = {
@@ -131,15 +85,16 @@ _data = {
 }
 
 [node name="Melee" type="Node2D"]
-visible = false
 script = ExtResource("1_oydhk")
-swing_pos_amount = 5
 
-[node name="Sprite" type="Sprite2D" parent="."]
-position = Vector2(0, -3)
-rotation = 0.937242
+[node name="SwingPivot" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite2D" parent="SwingPivot"]
+position = Vector2(1.67949, -3.34544)
+rotation = -0.213663
 texture = ExtResource("2_i81n3")
-offset = Vector2(0.512119, -4.35868)
+offset = Vector2(0.973332, -4.44575)
+flip_h = true
 
 [node name="Hitbox" parent="." instance=ExtResource("3_euly0")]
 collision_mask = 4
@@ -160,3 +115,11 @@ hframes = 5
 libraries = {
 "": SubResource("AnimationLibrary_0dyso")
 }
+
+[node name="SwingSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_ly1tx")
+
+[node name="SliceSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_qw06s")
+
+[connection signal="hit" from="Hitbox" to="." method="_on_hit"]
