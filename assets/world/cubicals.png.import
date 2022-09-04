@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://daju2q4kcw287"
-path="res://.godot/imported/walls.png-48f7469b757eaad7a2e6af693f5f4f9b.ctex"
+uid="uid://bomfyuowwffe2"
+path="res://.godot/imported/cubicals.png-d5a39e25ac5a3ba044310720d09d6ee1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/walls.png"
-dest_files=["res://.godot/imported/walls.png-48f7469b757eaad7a2e6af693f5f4f9b.ctex"]
+source_file="res://assets/world/cubicals.png"
+dest_files=["res://.godot/imported/cubicals.png-d5a39e25ac5a3ba044310720d09d6ee1.ctex"]
 
 [params]
 

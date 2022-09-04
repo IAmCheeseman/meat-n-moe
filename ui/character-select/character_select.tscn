@@ -45,21 +45,33 @@ offset_right = 109.0
 offset_bottom = 27.0
 alignment = 1
 
+[node name="SelectRandom" type="Button" parent="Center/VBox/HBox"]
+unique_name_in_owner = true
+offset_left = 9.0
+offset_right = 48.0
+offset_bottom = 10.0
+focus_neighbor_left = NodePath("../SelectMeat")
+focus_neighbor_right = NodePath("../SelectMoe")
+text = "Random"
+
 [node name="SelectMoe" type="Button" parent="Center/VBox/HBox"]
 unique_name_in_owner = true
-offset_left = 30.0
-offset_right = 50.0
+offset_left = 52.0
+offset_right = 72.0
 offset_bottom = 10.0
+focus_neighbor_left = NodePath("../SelectRandom")
 focus_neighbor_right = NodePath("../SelectMeat")
 text = "Moe"
 
 [node name="SelectMeat" type="Button" parent="Center/VBox/HBox"]
 unique_name_in_owner = true
-offset_left = 54.0
-offset_right = 78.0
+offset_left = 76.0
+offset_right = 100.0
 offset_bottom = 10.0
 focus_neighbor_left = NodePath("../SelectMoe")
+focus_neighbor_right = NodePath("../SelectRandom")
 text = "Meat"
 
+[connection signal="pressed" from="Center/VBox/HBox/SelectRandom" to="." method="_on_random_pressed"]
 [connection signal="pressed" from="Center/VBox/HBox/SelectMoe" to="." method="_on_moe_pressed"]
 [connection signal="pressed" from="Center/VBox/HBox/SelectMeat" to="." method="_on_meat_pressed"]

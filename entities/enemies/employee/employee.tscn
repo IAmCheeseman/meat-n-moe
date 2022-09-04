@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://bxuvwabyf1kn8"]
+[gd_scene load_steps=14 format=3 uid="uid://bxuvwabyf1kn8"]
 
 [ext_resource type="PackedScene" uid="uid://dylapl5u3imf3" path="res://entities/enemies/base/enemy.tscn" id="1_0exql"]
 [ext_resource type="Script" path="res://entities/enemies/employee/employee.gd" id="1_j083q"]
 [ext_resource type="Texture2D" uid="uid://bmpog8qhinxfb" path="res://assets/entities/employee.png" id="2_gm6v0"]
+[ext_resource type="Texture2D" uid="uid://d3f2kyqlgtul8" path="res://assets/entities/employee_corpse.png" id="3_kltqi"]
 [ext_resource type="AnimationLibrary" uid="uid://bsyqpj68awff2" path="res://entities/enemies/employee/employee_animations.res" id="3_n3oiy"]
 [ext_resource type="Texture2D" uid="uid://f1n7waaikvi6" path="res://assets/entities/employee_gun.png" id="4_cxfoe"]
 [ext_resource type="Texture2D" uid="uid://j62k70plt7i8" path="res://assets/blood_noise.tres" id="5_ky4js"]
@@ -28,6 +29,7 @@ height = 16.0
 [node name="Employee" groups=["employee"] instance=ExtResource("1_0exql")]
 script = ExtResource("1_j083q")
 aim_dist = 5.0
+corpse_texture = ExtResource("3_kltqi")
 
 [node name="Sprite" parent="." index="0"]
 y_sort_enabled = true

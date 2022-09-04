@@ -93,7 +93,6 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
-z_index = 3
 y_sort_enabled = true
 collision_layer = 2
 script = ExtResource("1_ukk7d")
@@ -117,20 +116,23 @@ smoothing_speed = 20.0
 script = ExtResource("2_hqqti")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-position = Vector2(0, -7)
+position = Vector2(0, -1)
 texture = ExtResource("3_h47v7")
+offset = Vector2(0, -6)
 hframes = 6
 vframes = 3
 frame = 13
 
 [node name="Blood" type="Sprite2D" parent="Sprite"]
 material = SubResource("ShaderMaterial_etbls")
+position = Vector2(0, -6)
 texture = ExtResource("6_15sqc")
 hframes = 6
 vframes = 3
 frame = 6
 
 [node name="Weapons" type="Node2D" parent="Sprite"]
+position = Vector2(0, -6)
 
 [node name="Gun" parent="Sprite/Weapons" instance=ExtResource("6_l3amo")]
 

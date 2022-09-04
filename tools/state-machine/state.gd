@@ -1,10 +1,13 @@
 extends RefCounted
 class_name State
 
-
+## Name of state
 var name: String
+## Gets called every frame this state is active
 var process_func: Callable
+## Gets called when this state starts being active
 var ready_func: Callable
+## Gets called when this state stops being active
 var end_func: Callable
 
 

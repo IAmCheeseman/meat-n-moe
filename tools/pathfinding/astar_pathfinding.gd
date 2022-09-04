@@ -1,21 +1,23 @@
 extends Node
 
-var astar = AStar2D.new()
+var astar := AStar2D.new()
 
 
 const DIRECTIONS = [
 	Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN,
 ]
 
+## Generates astar connections from a tileset
 func generate_astar(tileset: TileMap) -> void:
 	astar.clear()
 	
 	var size = tileset.get_used_rect().end
+	var tileset_start = tileset.get_used_rect().position
 	
 	for x in size.x:
 		for y in size.y:
-			var xy = Vector2(x, y)
-			var idx = get_astar_cell_id(xy, tileset)
+			var xy = Vector2(x, y) + tileset_start
+			var idx = _get_astar_cell_id(xy, tileset)
 			astar.add_point(
 				idx,
 				tileset.map_to_world(Vector2(x, y))
@@ -23,20 +25,22 @@ func generate_astar(tileset: TileMap) -> void:
 	
 	for x in size.x:
 		for y in size.y:
-			var xy = Vector2(x, y)
-			if tileset.get_cell_source_id(0, xy, false) != -1: continue
+			var xy = Vector2(x, y) + tileset_start
+			var id = tileset.get_cell_source_id(0, xy, false) 
+			if id != -1: continue
 			
-			var idx = get_astar_cell_id(xy, tileset)
+			var idx = _get_astar_cell_id(xy, tileset)
 			for dir in DIRECTIONS:
 				var neighbor_cell = xy + dir
-				var idx_neighbor = get_astar_cell_id(neighbor_cell, tileset)
+				var idx_neighbor = _get_astar_cell_id(neighbor_cell, tileset)
 				if astar.has_point(idx_neighbor):
 					astar.connect_points(idx, idx_neighbor, false)
 
-func get_astar_cell_id(cell: Vector2, tileset: TileMap) -> int:
+func _get_astar_cell_id(cell: Vector2, tileset: TileMap) -> int:
 	return int(cell.y + cell.x * tileset.get_used_rect().size.y)
 
-
+## Returns the direction you need to go in from [code]start_pos[/code] to
+## get to [code]target_pos[/code]
 func get_astar_path(start_pos: Vector2, target_pos: Vector2) -> Vector2:
 	var idx_start = astar.get_closest_point(start_pos)
 	var idx_target = astar.get_closest_point(target_pos)
@@ -47,7 +51,8 @@ func get_astar_path(start_pos: Vector2, target_pos: Vector2) -> Vector2:
 		return start_pos.direction_to(path[1])
 	return Vector2.ZERO
 
-
+## Returns an array of positions you need to pass through to get to
+## [code]target_pos[/code]
 func get_astar_path_arr(start_pos: Vector2, target_pos: Vector2) -> Array:
 	var idx_start = astar.get_closest_point(start_pos)
 	var idx_target = astar.get_closest_point(target_pos)

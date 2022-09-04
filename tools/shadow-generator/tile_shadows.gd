@@ -8,8 +8,11 @@ func _ready() -> void:
 	
 	shadow.show_behind_parent = true
 	shadow.position.y = 8
-	shadow.modulate = Color(0, 0, 0, 0.5)
+	shadow.set_layer_modulate(0, Color(0, 0, 0, 0.5))
 	shadow.z_index = -2
 	
 	add_child(shadow)
+	
+	for i in shadow.get_children():
+		i.queue_free()
 

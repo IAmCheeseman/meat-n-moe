@@ -34,10 +34,20 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://entities/enemies/base/enemy.gd"
 }, {
+"base": "Node",
+"class": &"FrameTimer",
+"language": &"GDScript",
+"path": "res://tools/Timer/await_timer.gd"
+}, {
 "base": "Node2D",
 "class": &"Gun",
 "language": &"GDScript",
 "path": "res://entities/player/moe/gun.gd"
+}, {
+"base": "Area2D",
+"class": &"LoadingZone",
+"language": &"GDScript",
+"path": "res://tools/loading-zone/loading_zone.gd"
 }, {
 "base": "Node",
 "class": &"ShadowGenerator",
@@ -60,7 +70,9 @@ _global_script_class_icons={
 "DamageManager": "",
 "Employee": "",
 "Enemy": "",
+"FrameTimer": "",
 "Gun": "",
+"LoadingZone": "",
 "ShadowGenerator": "",
 "State": "",
 "StateMachine": ""
@@ -185,6 +197,6 @@ fullscreen={
 
 [rendering]
 
-2d/snap/snap_2d_vertices_to_pixel=true
+2d/snap/snap_2d_transforms_to_pixel=true
 textures/canvas_textures/default_texture_filter=0
 textures/canvas_textures/default_texture_repeat=1

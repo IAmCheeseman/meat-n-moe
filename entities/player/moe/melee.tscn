@@ -98,7 +98,7 @@ flip_h = true
 
 [node name="Hitbox" parent="." instance=ExtResource("3_euly0")]
 collision_mask = 4
-damage = 1.5
+damage = 0.5
 
 [node name="CollisionShape" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(15.25, 0)

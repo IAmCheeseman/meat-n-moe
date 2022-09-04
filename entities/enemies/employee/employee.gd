@@ -9,6 +9,7 @@ class_name Employee
 @onready var give_up_timer := $Timers/WalkGiveUp
 
 @export var aim_dist := 5.0
+@export var corpse_texture := preload("res://assets/entities/employee_corpse.png")
 
 var _s_aim := State.new(
 	"aim",
@@ -29,12 +30,15 @@ func _process(_delta: float) -> void:
 
 
 func _idle_process(delta: float) -> void:
-	var target_vel = global_position.direction_to(target_position) * speed
-	if global_position.distance_to(target_position) > aim_dist:
-		target_vel = Vector2.ZERO
+	var target_dir = Pathfinder.get_astar_path(
+		global_position,
+		target_position
+	)
+	if global_position.distance_to(target_position) < aim_dist:
+		target_dir = Vector2.ZERO
 	
 	velocity = velocity.move_toward(
-		target_vel,
+		target_dir * speed,
 		accel * delta
 	)
 	
@@ -63,6 +67,7 @@ func _walk_process(delta: float) -> void:
 		global_position,
 		target_position
 	)
+	
 	if target_dir == Vector2.ZERO:
 		target_dir = global_position.direction_to(target_position)
 	
@@ -122,8 +127,8 @@ func _on_death() -> void:
 	var corpse = preload("res://entities/corpse/corpse.tscn").instantiate()
 	corpse.global_position = global_position
 	corpse.velocity = damage_manager.previous_kb * 150
-	GameManager.world.call_deferred("add_child", corpse)
-	await get_tree().process_frame
-	corpse.set_sprite(preload("res://assets/entities/employee_corpse.png"))
+	call_deferred("add_sibling", corpse)
+	await FrameTimer.physics_timer(self).timeout
+	corpse.set_sprite(corpse_texture)
 	
 	queue_free()

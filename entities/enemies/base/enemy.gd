@@ -39,8 +39,11 @@ var target_position := Vector2.ZERO
 var callouts := []
 
 
-func recieve_player_callout(enemy: Enemy, player: CharacterBody2D, callout_id: int) -> void:
-	if global_position.distance_to(enemy.global_position) < 48 and !callout_id in callouts:
+func recieve_player_callout(enemy: CharacterBody2D, player: CharacterBody2D, callout_id: int) -> void:
+	var check = true #global_position.distance_to(enemy.global_position) < 64
+	if enemy == player:
+		check = true
+	if check:
 		target_position = player.global_position
 		callouts.append(callout_id)
 		get_tree().call_group("enemy", "recieve_player_callout", self, player)
@@ -52,7 +55,7 @@ func _new_target_position() -> void:
 	target_position = base_position + Vector2.RIGHT.rotated(TAU * randf()) * wander_range * randf()
 	
 	collision_checker.global_position = target_position
-	await get_tree().physics_frame
+	await FrameTimer.physics_timer(self).timeout
 	if collision_checker.get_overlapping_bodies().size() > 0:
 		_new_target_position()
 

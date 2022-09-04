@@ -149,7 +149,6 @@ fill_to = Vector2(0, 0)
 
 [node name="LevelBlock1" parent="Buildings" instance=ExtResource("2_4fnqf")]
 position = Vector2(58, 149)
-boss = false
 level_name = "Meat n' Moe"
 level_desc = "Meat meets Moe, they decide to commit mass murder."
 level_texture = ExtResource("2_u8ng6")
@@ -157,7 +156,6 @@ level_texture = ExtResource("2_u8ng6")
 [node name="LevelBlock2" parent="Buildings" instance=ExtResource("2_4fnqf")]
 position = Vector2(58, 122)
 z_index = 1
-boss = false
 level_name = "Meat n' Moe's First Encounter"
 level_desc = "Meat and Moe find that not everyone takes kindly to mass murder."
 level = "res://world/levels/level_1a.tscn"
@@ -174,7 +172,6 @@ level_texture = ExtResource("2_fnww0")
 [node name="LevelBlock4" parent="Buildings" instance=ExtResource("2_4fnqf")]
 position = Vector2(58, 68)
 z_index = 1
-boss = false
 level_name = "The Mailmen"
 level_desc = "Apparently there's a post office in this building to mass murder."
 level_texture = ExtResource("4_7h4mx")
@@ -190,7 +187,6 @@ level_texture = ExtResource("4_7h4mx")
 [node name="LevelBlock6" parent="Buildings" instance=ExtResource("2_4fnqf")]
 position = Vector2(58, 14)
 z_index = 1
-boss = false
 level_name = "The President of the US of A"
 level_desc = "The president doesn't like what Meat n' Moe are doing to this company, Meat n' Moe are gonna have to mass murder him too."
 level_texture = ExtResource("5_j6phs")
@@ -206,7 +202,6 @@ level_texture = ExtResource("5_j6phs")
 [node name="LevelBlock8" parent="Buildings" instance=ExtResource("2_4fnqf")]
 position = Vector2(58, -40)
 z_index = 1
-boss = false
 level_name = "War"
 level_desc = "Apparently the president *really* did not like what Meat n' Moe did. Gotta mass murder those tanks and helicopters now."
 level_texture = ExtResource("5_a26hp")
@@ -274,7 +269,6 @@ grow_vertical = 2
 metadata/_edit_lock_ = true
 
 [node name="Margin" type="MarginContainer" parent="CanvasLayer/Control"]
-layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -286,7 +280,6 @@ theme_override_constants/margin_right = 10
 metadata/_edit_lock_ = true
 
 [node name="HBox" type="HBoxContainer" parent="CanvasLayer/Control/Margin"]
-layout_mode = 2
 offset_top = 5.0
 offset_right = 320.0
 offset_bottom = 92.0
@@ -296,7 +289,6 @@ metadata/_edit_lock_ = true
 
 [node name="Logo" type="TextureRect" parent="CanvasLayer/Control/Margin/HBox"]
 custom_minimum_size = Vector2(320, 0)
-layout_mode = 2
 offset_right = 320.0
 offset_bottom = 87.0
 texture = ExtResource("5_uko2u")

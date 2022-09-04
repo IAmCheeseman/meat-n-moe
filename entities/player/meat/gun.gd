@@ -21,3 +21,6 @@ func _shoot() -> void:
 		player.velocity -= dir * 50
 		
 		GameManager.camera.shake(2, 8, 8, 0.6, 0.1, true)
+		
+		get_tree().call_group("enemy", "recieve_player_callout", self, self, GameManager.enemy_callouts)
+		GameManager.enemy_callouts += 1

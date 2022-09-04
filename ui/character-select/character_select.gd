@@ -1,5 +1,6 @@
 extends Control
 
+@onready var random_button = %SelectRandom
 @onready var moe_button = %SelectMoe
 @onready var meat_button = %SelectMeat
 
@@ -8,7 +9,7 @@ extends Control
 
 func _ready() -> void:
 	show()
-	moe_button.grab_focus()
+	random_button.grab_focus()
 
 func spawn_player(player_obj: PackedScene) -> void:
 	var player = player_obj.instantiate()
@@ -23,3 +24,10 @@ func _on_moe_pressed() -> void:
 
 func _on_meat_pressed() -> void:
 	spawn_player(preload("res://entities/player/meat/player.tscn"))
+
+
+func _on_random_pressed() -> void:
+	if randf() < 0.5:
+		_on_moe_pressed()
+	else:
+		_on_meat_pressed()

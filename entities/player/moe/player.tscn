@@ -32,7 +32,6 @@ shader = ExtResource("8_wbss7")
 amp = 0.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
-z_index = 3
 y_sort_enabled = true
 collision_layer = 2
 script = ExtResource("1_5dugi")
@@ -64,8 +63,10 @@ material = SubResource("ShaderMaterial_etbls")
 texture = ExtResource("5_imny8")
 
 [node name="Weapons" type="Node2D" parent="Sprite"]
+position = Vector2(0, -1)
 
 [node name="Hook" parent="Sprite/Weapons" instance=ExtResource("7_ao2k4")]
+visible = false
 
 [node name="Gun" parent="Sprite/Weapons" instance=ExtResource("6_5hlaf")]
 

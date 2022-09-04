@@ -7,7 +7,7 @@ var target_node: Node2D
 
 
 func _on_new_node_selected(node: Node2D) -> void:
-	await get_tree().physics_frame
+	await FrameTimer.physics_timer(self).timeout
 	
 	target_node = node
 	
@@ -19,4 +19,5 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_tree().root.set_input_as_handled()
 
 func _process(delta: float) -> void:
-	position.y = ceil(lerp(position.y, target_node.position.y - 14, 15 * delta))
+	if target_node:
+		position.y = ceil(lerp(position.y, target_node.position.y - 14, 15 * delta))

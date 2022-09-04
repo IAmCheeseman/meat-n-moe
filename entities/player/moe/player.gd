@@ -87,6 +87,8 @@ func _physics_process(delta: float) -> void:
 			"amount",
 			clamp(blood.material.get_shader_uniform("amount") - blood_reduce_rate * delta, 0.0, 0.8)
 		)
+		
+	blood.offset = sprite.offset
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("roll") and _is_state("default") and _get_input_dir() != Vector2.ZERO:

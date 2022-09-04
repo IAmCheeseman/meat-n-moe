@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://ui/level-select/level_block.gd" id="1_8ykii"]
 [ext_resource type="Shader" path="res://ui/level-select/level_block.gdshader" id="2_e0whk"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_f5q2d"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a5gpe"]
 shader = ExtResource("2_e0whk")
 add_margins = true
 color = Color(1, 1, 1, 1)
@@ -13,8 +13,7 @@ width = 0
 
 [node name="LevelBlock" type="Node2D"]
 script = ExtResource("1_8ykii")
-boss = null
 level_texture = null
 
 [node name="Sprite" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_f5q2d")
+material = SubResource("ShaderMaterial_a5gpe")
