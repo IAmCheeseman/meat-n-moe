@@ -116,8 +116,9 @@ func _aim_process(_delta: float) -> void:
 	sprite.scale.x = -1 if _player.global_position.x < global_position.x else 1
 
 func _aim_end() -> void:
-	shoot_sfx.play()
-	_shoot()
+	if visible:
+		shoot_sfx.play()
+		_shoot()
 	
 	arm.hide()
 
