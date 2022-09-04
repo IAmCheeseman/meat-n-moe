@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bpkfj0be0g0xi"]
+[gd_scene load_steps=10 format=3 uid="uid://bpkfj0be0g0xi"]
 
 [ext_resource type="PackedScene" uid="uid://bxuvwabyf1kn8" path="res://entities/enemies/employee/employee.tscn" id="1_18bjg"]
 [ext_resource type="Texture2D" uid="uid://bcdcls1u1ddwb" path="res://assets/entities/shotgun_employee.png" id="2_12i3p"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://entities/enemies/shotgun-employee/shotgun_employee.gd" id="2_srwa5"]
 [ext_resource type="Texture2D" uid="uid://cnen4upt0axt3" path="res://assets/entities/shotgun_employee_corpse.png" id="3_sm13r"]
 [ext_resource type="Texture2D" uid="uid://mxb2w8oyh5bn" path="res://assets/entities/shotgun_employee_bloody.png" id="5_45asl"]
+[ext_resource type="AudioStream" uid="uid://d3n01q8r4le47" path="res://assets/sounds/hey_shotgun_employee.wav" id="7_7p8t4"]
+[ext_resource type="AudioStream" uid="uid://bjfoxv2ibtato" path="res://assets/sounds/shotgun.wav" id="8_1pu0h"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bp383"]
 height = 20.0
@@ -18,18 +20,25 @@ corpse_texture = ExtResource("3_sm13r")
 texture = ExtResource("2_12i3p")
 offset = Vector2(0, -9)
 
-[node name="Arm" parent="Sprite" index="0"]
+[node name="Blood" parent="Sprite" index="0"]
+position = Vector2(0, -9)
+texture = ExtResource("5_45asl")
+
+[node name="Arm" parent="Sprite" index="1"]
 position = Vector2(7, -9)
 
 [node name="Sprite" parent="Sprite/Arm" index="0"]
 position = Vector2(6, -1)
 texture = ExtResource("2_78rhs")
 
-[node name="Blood" parent="Sprite" index="1"]
-texture = ExtResource("5_45asl")
-
 [node name="CollisionShape2D" parent="Collisions/Hurtbox" index="0"]
 shape = SubResource("CapsuleShape2D_bp383")
 
 [node name="DamageManager" parent="." index="4"]
 max_health = 2.0
+
+[node name="HeySFX" parent="." index="7"]
+stream = ExtResource("7_7p8t4")
+
+[node name="ShootSFX" parent="." index="8"]
+stream = ExtResource("8_1pu0h")

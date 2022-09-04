@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cb245avdasec4"]
+
+[ext_resource type="PackedScene" uid="uid://d2kcryl7x3gji" path="res://world/props/prop.tscn" id="1_rhoqs"]
+[ext_resource type="Texture2D" uid="uid://b6lsojr8u48qg" path="res://assets/world/papers.png" id="2_vus6m"]
+
+[node name="Paper" instance=ExtResource("1_rhoqs")]
+texture = ExtResource("2_vus6m")
+hframes = 3

@@ -8,8 +8,24 @@ class_name Employee
 @onready var aim_timer := $Timers/Aim
 @onready var give_up_timer := $Timers/WalkGiveUp
 
+@onready var hey_sfx := $HeySFX
+@onready var hurt_sfx := $HurtSFX
+@onready var death_sfx := $DieSFX
+@onready var shoot_sfx := $ShootSFX
+
 @export var aim_dist := 5.0
 @export var corpse_texture := preload("res://assets/entities/employee_corpse.png")
+
+var death_sounds := [
+	preload("res://assets/sounds/death_employee_1.wav"),
+	preload("res://assets/sounds/death_employee_2.wav"),
+]
+
+var hurt_sounds := [
+	preload("res://assets/sounds/hurt_employee_1.wav"),
+	preload("res://assets/sounds/hurt_employee_2.wav"),
+	preload("res://assets/sounds/hurt_employee_3.wav"),
+]
 
 var _s_aim := State.new(
 	"aim",
@@ -24,6 +40,7 @@ var _continuous_shots := 0
 func _ready() -> void:
 	arm.hide()
 	_assign_shadow()
+	blood.material = blood.material.duplicate()
 
 func _process(_delta: float) -> void:
 	blood.frame = sprite.frame
@@ -38,11 +55,11 @@ func _idle_process(delta: float) -> void:
 		target_dir = Vector2.ZERO
 	
 	velocity = velocity.move_toward(
-		target_dir * speed,
+		target_dir,
 		accel * delta
 	)
 	
-	if velocity.is_equal_approx(Vector2.ZERO):
+	if velocity.length() < 10:
 		animation_player.play("employee_animations/Idle")
 	else:
 		animation_player.play("employee_animations/Walk")
@@ -99,6 +116,7 @@ func _aim_process(_delta: float) -> void:
 	sprite.scale.x = -1 if _player.global_position.x < global_position.x else 1
 
 func _aim_end() -> void:
+	shoot_sfx.play()
 	_shoot()
 	
 	arm.hide()
@@ -131,4 +149,17 @@ func _on_death() -> void:
 	await FrameTimer.physics_timer(self).timeout
 	corpse.set_sprite(corpse_texture)
 	
-	queue_free()
+	death_sfx.stream = death_sounds[death_sounds.size() * randf()]
+	death_sfx.play()
+	death_sfx.connect("finished", Callable(self, "queue_free"))
+	
+	hide()
+	_state_machine.change_state(null)
+
+func _on_took_damage() -> void:
+	hurt_sfx.stream = hurt_sounds[hurt_sounds.size() * randf()]
+	hurt_sfx.play()
+
+
+func _on_found_player() -> void:
+	hey_sfx.play()

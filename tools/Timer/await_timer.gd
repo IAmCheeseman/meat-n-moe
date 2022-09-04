@@ -9,7 +9,7 @@ class _PhysicsTimer extends Node:
 	func _init(time: int) -> void:
 		_time_left = time + 1
 	
-	func _physics_process(delta: float) -> void:
+	func _physics_process(_delta: float) -> void:
 		_time_left -= 1
 		if _time_left <= 0:
 			emit_signal("timeout")

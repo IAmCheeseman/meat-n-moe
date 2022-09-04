@@ -1,9 +1,10 @@
-extends Node
+extends Node2D
+class_name Astar1Pathfinding
 
 var astar := AStar2D.new()
 
 
-const DIRECTIONS = [
+const _DIRECTIONS = [
 	Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN,
 ]
 
@@ -12,11 +13,15 @@ func generate_astar(tileset: TileMap) -> void:
 	astar.clear()
 	
 	var size = tileset.get_used_rect().end
-	var tileset_start = tileset.get_used_rect().position
 	
 	for x in size.x:
 		for y in size.y:
-			var xy = Vector2(x, y) + tileset_start
+			var xy = Vector2(x, y)
+			var tile_empty = true
+			for i in tileset.get_layers_count():
+				if tileset.get_cell_source_id(i, xy, false) != -1:
+					tile_empty = false
+			if !tile_empty: continue
 			var idx = _get_astar_cell_id(xy, tileset)
 			astar.add_point(
 				idx,
@@ -25,16 +30,28 @@ func generate_astar(tileset: TileMap) -> void:
 	
 	for x in size.x:
 		for y in size.y:
-			var xy = Vector2(x, y) + tileset_start
-			var id = tileset.get_cell_source_id(0, xy, false) 
-			if id != -1: continue
+			var xy = Vector2(x, y)
+			var tile_empty = true
+			for i in tileset.get_layers_count():
+				if tileset.get_cell_source_id(i, xy, false) != -1:
+					tile_empty = false
+			if !tile_empty: continue
 			
 			var idx = _get_astar_cell_id(xy, tileset)
-			for dir in DIRECTIONS:
+			for dir in _DIRECTIONS:
 				var neighbor_cell = xy + dir
 				var idx_neighbor = _get_astar_cell_id(neighbor_cell, tileset)
 				if astar.has_point(idx_neighbor):
 					astar.connect_points(idx, idx_neighbor, false)
+#	update()
+#
+#func _draw() -> void:
+#	for i in astar.get_point_ids():
+#		for j in astar.get_point_connections(i):
+#			draw_line(
+#				astar.get_point_position(i), astar.get_point_position(j), 
+#				Color.DARK_GOLDENROD
+#			)
 
 func _get_astar_cell_id(cell: Vector2, tileset: TileMap) -> int:
 	return int(cell.y + cell.x * tileset.get_used_rect().size.y)

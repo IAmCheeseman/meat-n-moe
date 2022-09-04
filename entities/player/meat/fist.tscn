@@ -109,7 +109,6 @@ libraries = {
 
 [node name="Hitbox" parent="." instance=ExtResource("2_xqwpb")]
 collision_mask = 4
-damage = 2.0
 
 [node name="CollisionShape" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(12, 0)

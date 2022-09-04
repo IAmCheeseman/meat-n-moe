@@ -1,6 +1,23 @@
 extends Employee
 
 
+func _ready() -> void:
+	arm.hide()
+	_assign_shadow()
+	blood.material = blood.material.duplicate()
+	
+	death_sounds = [
+		preload("res://assets/sounds/death_shotgun_employee_1.wav"),
+		preload("res://assets/sounds/death_shotgun_employee_2.wav"),
+	]
+
+	hurt_sounds = [
+		preload("res://assets/sounds/hurt_shotgun_employee_1.wav"),
+		preload("res://assets/sounds/hurt_shotgun_employee_2.wav"),
+		preload("res://assets/sounds/hurt_shotgun_employee_3.wav"),
+	]
+
+
 func _shoot() -> void:
 	var mods = [0, 0.5, 1]
 	for i in 3:

@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bypycqbhb0xxd"]
+[gd_scene load_steps=6 format=3 uid="uid://dw3o53jwxb74u"]
 
 [ext_resource type="Theme" uid="uid://cmvj8p1hux406" path="res://assets/ui/theme.tres" id="1_clm1h"]
 [ext_resource type="Script" path="res://ui/character-select/character_select.gd" id="2_6qqut"]
+[ext_resource type="Texture2D" uid="uid://cxc7wlad15u66" path="res://assets/ui/play_random.png" id="3_pc1n1"]
+[ext_resource type="Texture2D" uid="uid://6crsrkdi7jkg" path="res://assets/ui/play_moe.png" id="4_f1jbg"]
+[ext_resource type="Texture2D" uid="uid://bqi6kjh2d7y5u" path="res://assets/ui/play_meat.png" id="5_y1s4q"]
 
 [node name="CharacterSelect" type="Control"]
 layout_mode = 3
@@ -29,48 +32,56 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBox" type="VBoxContainer" parent="Center"]
-offset_left = 105.0
+offset_left = 97.0
 offset_top = 76.0
-offset_right = 214.0
+offset_right = 223.0
 offset_bottom = 103.0
 
 [node name="Label" type="Label" parent="Center/VBox"]
-offset_right = 109.0
+offset_right = 126.0
 offset_bottom = 13.0
 text = "Select your character."
 
 [node name="HBox" type="HBoxContainer" parent="Center/VBox"]
 offset_top = 17.0
-offset_right = 109.0
+offset_right = 126.0
 offset_bottom = 27.0
 alignment = 1
 
 [node name="SelectRandom" type="Button" parent="Center/VBox/HBox"]
 unique_name_in_owner = true
-offset_left = 9.0
-offset_right = 48.0
+offset_right = 51.0
 offset_bottom = 10.0
 focus_neighbor_left = NodePath("../SelectMeat")
 focus_neighbor_right = NodePath("../SelectMoe")
+mouse_filter = 2
+button_mask = 0
 text = "Random"
+icon = ExtResource("3_pc1n1")
 
 [node name="SelectMoe" type="Button" parent="Center/VBox/HBox"]
 unique_name_in_owner = true
-offset_left = 52.0
-offset_right = 72.0
+offset_left = 55.0
+offset_right = 86.0
 offset_bottom = 10.0
 focus_neighbor_left = NodePath("../SelectRandom")
 focus_neighbor_right = NodePath("../SelectMeat")
+mouse_filter = 2
+button_mask = 0
 text = "Moe"
+icon = ExtResource("4_f1jbg")
 
 [node name="SelectMeat" type="Button" parent="Center/VBox/HBox"]
 unique_name_in_owner = true
-offset_left = 76.0
-offset_right = 100.0
+offset_left = 90.0
+offset_right = 126.0
 offset_bottom = 10.0
 focus_neighbor_left = NodePath("../SelectMoe")
 focus_neighbor_right = NodePath("../SelectRandom")
+mouse_filter = 2
+button_mask = 0
 text = "Meat"
+icon = ExtResource("5_y1s4q")
 
 [connection signal="pressed" from="Center/VBox/HBox/SelectRandom" to="." method="_on_random_pressed"]
 [connection signal="pressed" from="Center/VBox/HBox/SelectMoe" to="." method="_on_moe_pressed"]

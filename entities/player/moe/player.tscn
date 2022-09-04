@@ -34,6 +34,7 @@ amp = 0.0
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 y_sort_enabled = true
 collision_layer = 2
+collision_mask = 9
 script = ExtResource("1_5dugi")
 accel = 400.0
 frict = 700.0

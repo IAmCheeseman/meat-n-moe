@@ -15,7 +15,7 @@ func _ready() -> void:
 	
 	add_child(timer)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("secondary_action") and timer.is_stopped():
 		emit_signal("selected", self)
 		

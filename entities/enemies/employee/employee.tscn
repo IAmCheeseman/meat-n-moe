@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bxuvwabyf1kn8"]
+[gd_scene load_steps=16 format=3 uid="uid://bxuvwabyf1kn8"]
 
 [ext_resource type="PackedScene" uid="uid://dylapl5u3imf3" path="res://entities/enemies/base/enemy.tscn" id="1_0exql"]
 [ext_resource type="Script" path="res://entities/enemies/employee/employee.gd" id="1_j083q"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://j62k70plt7i8" path="res://assets/blood_noise.tres" id="5_ky4js"]
 [ext_resource type="Shader" path="res://assets/blood.gdshader" id="5_tt1vi"]
 [ext_resource type="Texture2D" uid="uid://00t7i55oghkm" path="res://assets/entities/employee_bloody.png" id="7_s7xy8"]
+[ext_resource type="AudioStream" uid="uid://dwbjlvi8xo1a0" path="res://assets/sounds/hey_employee.wav" id="10_n3xlw"]
+[ext_resource type="AudioStream" uid="uid://c1tyh4cacjo2d" path="res://assets/sounds/pistol.wav" id="11_h1yf1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n50ld"]
 shader = ExtResource("5_tt1vi")
@@ -20,7 +22,7 @@ radius = 1.99999
 height = 3.99999
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7un1p"]
-radius = 90.0222
+radius = 190.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eje3b"]
 radius = 5.0
@@ -32,27 +34,26 @@ aim_dist = 5.0
 corpse_texture = ExtResource("3_kltqi")
 
 [node name="Sprite" parent="." index="0"]
-y_sort_enabled = true
 texture = ExtResource("2_gm6v0")
 offset = Vector2(0, -8)
 hframes = 3
 vframes = 3
 frame = 6
 
-[node name="Arm" type="Node2D" parent="Sprite" index="0"]
-position = Vector2(3, -6)
-
-[node name="Sprite" type="Sprite2D" parent="Sprite/Arm" index="0"]
-position = Vector2(4, 0)
-texture = ExtResource("4_cxfoe")
-
-[node name="Blood" type="Sprite2D" parent="Sprite" index="1"]
+[node name="Blood" type="Sprite2D" parent="Sprite" index="0"]
 material = SubResource("ShaderMaterial_n50ld")
 position = Vector2(0, -8)
 texture = ExtResource("7_s7xy8")
 hframes = 3
 vframes = 3
 frame = 6
+
+[node name="Arm" type="Node2D" parent="Sprite" index="1"]
+position = Vector2(3, -6)
+
+[node name="Sprite" type="Sprite2D" parent="Sprite/Arm" index="0"]
+position = Vector2(4, 0)
+texture = ExtResource("4_cxfoe")
 
 [node name="CollisionShape" parent="." index="2"]
 visible = false
@@ -63,7 +64,7 @@ shape = SubResource("CapsuleShape2D_f38a7")
 [node name="PlayerDetection" parent="Collisions" index="0"]
 visible = false
 
-[node name="CollisionShape" parent="Collisions/PlayerDetection" index="0"]
+[node name="CollisionShape" parent="Collisions/PlayerDetection" index="1"]
 shape = SubResource("CircleShape2D_7un1p")
 
 [node name="CollisionChecker" parent="Collisions" index="1"]
@@ -91,6 +92,19 @@ libraries = {
 "employee_animations": ExtResource("3_n3oiy")
 }
 
+[node name="HeySFX" type="AudioStreamPlayer2D" parent="." index="7"]
+stream = ExtResource("10_n3xlw")
+
+[node name="ShootSFX" type="AudioStreamPlayer2D" parent="." index="8"]
+stream = ExtResource("11_h1yf1")
+
+[node name="HurtSFX" type="AudioStreamPlayer2D" parent="." index="9"]
+volume_db = 10.0
+
+[node name="DieSFX" type="AudioStreamPlayer2D" parent="." index="10"]
+
+[connection signal="found_player" from="." to="." method="_on_found_player"]
 [connection signal="dead" from="DamageManager" to="." method="_on_death"]
+[connection signal="took_damage" from="DamageManager" to="." method="_on_took_damage"]
 [connection signal="timeout" from="Timers/Aim" to="." method="_on_aim_timeout"]
 [connection signal="timeout" from="Timers/WalkGiveUp" to="." method="_on_give_up_time_timeout"]

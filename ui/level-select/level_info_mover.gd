@@ -16,6 +16,8 @@ func _on_new_node_selected(node: Node2D) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if anim.current_animation == "In":
+		if event.is_action_pressed("skip"):
+			anim.play("RESET")
 		get_tree().root.set_input_as_handled()
 
 func _process(delta: float) -> void:

@@ -26,13 +26,19 @@ func change_state(to: State) -> void:
 	
 	_current_state = to
 	
+	if _current_state == null:
+		return
 	if _current_state.ready_func:
 		_current_state.ready_func.call()
 
 ## Processes the current state
 func process(delta: float) -> void:
+	if _current_state == null:
+		return
 	_current_state.process_func.call(delta)
 
 ## Returns [code]current_state[/code]'s name
 func get_state_name() -> String:
+	if _current_state == null:
+		return "null"
 	return _current_state.name

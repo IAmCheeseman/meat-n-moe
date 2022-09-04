@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2kcryl7x3gji"]
+
+[ext_resource type="Script" path="res://world/props/prop.gd" id="1_lupc0"]
+
+[node name="Prop" type="Sprite2D"]
+y_sort_enabled = true
+script = ExtResource("1_lupc0")

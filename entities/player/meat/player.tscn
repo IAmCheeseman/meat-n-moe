@@ -95,13 +95,14 @@ _data = {
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 y_sort_enabled = true
 collision_layer = 2
+collision_mask = 9
 script = ExtResource("1_ukk7d")
 speed = 100.0
 accel = 400.0
 frict = 700.0
 slide_speed = 175.0
 slide_accel = 200.0
-regen_rate = 0.5
+regen_rate = 0.35
 blood_reduce_rate = 0.05
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -166,7 +167,7 @@ process_material = SubResource("ParticleProcessMaterial_fgfdn")
 [node name="DamageManager" type="Node" parent="."]
 script = ExtResource("7_i625j")
 hurtbox_path = NodePath("../Collision/Hurtbox")
-max_health = 4.0
+max_health = 3.5
 is_enemy = false
 
 [node name="Timers" type="Node" parent="."]

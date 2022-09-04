@@ -27,6 +27,7 @@ func _on_meat_pressed() -> void:
 
 
 func _on_random_pressed() -> void:
+	randomize()
 	if randf() < 0.5:
 		_on_moe_pressed()
 	else:

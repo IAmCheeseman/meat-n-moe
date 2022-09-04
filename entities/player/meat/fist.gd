@@ -15,7 +15,7 @@ var swing_dir = 1
 signal selected(node: Node2D)
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("melee"):
 		emit_signal("selected", self)
 		_swing()

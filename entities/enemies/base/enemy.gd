@@ -38,15 +38,16 @@ var target_position := Vector2.ZERO
 
 var callouts := []
 
+signal found_player
 
-func recieve_player_callout(enemy: CharacterBody2D, player: CharacterBody2D, callout_id: int) -> void:
-	var check = true #global_position.distance_to(enemy.global_position) < 64
-	if enemy == player:
-		check = true
+
+func recieve_player_callout(enemy: CharacterBody2D, player: CharacterBody2D, callout_id: int, volume: int) -> void:
+	var check = global_position.distance_to(enemy.global_position) < volume
+	
 	if check:
-		target_position = player.global_position
+		_player = player
 		callouts.append(callout_id)
-		get_tree().call_group("enemy", "recieve_player_callout", self, player)
+		get_tree().call_group("enemy", "recieve_player_callout", self, player, callout_id, volume / 2.0)
 
 func _new_target_position() -> void:
 	var base_position = global_position
@@ -67,8 +68,9 @@ func _physics_process(delta: float) -> void:
 	if !_player:
 		_player = player_detection.get_player()
 		if _player:
-			get_tree().call_group("enemy", "recieve_player_callout", self, _player, GameManager.enemy_callouts)
+			get_tree().call_group("enemy", "recieve_player_callout", self, _player, GameManager.enemy_callouts, 128)
 			GameManager.enemy_callouts += 1
+			emit_signal("found_player")
 	_state_machine.process(delta)
 
 

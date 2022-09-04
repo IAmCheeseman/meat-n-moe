@@ -18,10 +18,6 @@ var _s_hook_in := State.new(
 	Callable(self, "_hook_in_process"),
 	Callable(self, "_hook_in_start")
 )
-var _s_hook_out := State.new(
-	"hook_out",
-	Callable(self, "_hook_out_process")
-)
 var state_machine := StateMachine.new(_s_idle)
 
 var _end_position := Vector2.ZERO

@@ -18,7 +18,7 @@ signal selected(node: Node2D)
 func _ready() -> void:
 	sprite.scale.y = -1
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	look_at(get_global_mouse_position())
 	
 	if Input.is_action_pressed("main_action") and _can_shoot():
@@ -38,7 +38,7 @@ func _shoot() -> void:
 	
 	new_bullet.global_position = global_position + dir * shoot_position.position.x
 	new_bullet.dir = dir
-	new_bullet.damage = 0.5
+	new_bullet.damage = 0.75
 	new_bullet.shooter = self
 	
 	GameManager.world.add_child(new_bullet)

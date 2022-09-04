@@ -11,7 +11,7 @@ func _shoot() -> void:
 		
 		new_bullet.global_position = global_position + dir * 8
 		new_bullet.dir = dir
-		new_bullet.damage = 0.5
+		new_bullet.damage = 0.25
 		new_bullet.shooter = self
 		
 		GameManager.world.add_child(new_bullet)
@@ -22,5 +22,5 @@ func _shoot() -> void:
 		
 		GameManager.camera.shake(2, 8, 8, 0.6, 0.1, true)
 		
-		get_tree().call_group("enemy", "recieve_player_callout", self, self, GameManager.enemy_callouts)
+		get_tree().call_group("enemy", "recieve_player_callout", self, self, GameManager.enemy_callouts, 148)
 		GameManager.enemy_callouts += 1

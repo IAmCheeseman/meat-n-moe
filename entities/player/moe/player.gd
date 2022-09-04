@@ -128,7 +128,7 @@ func _on_roll_timeout() -> void:
 func _hook_start() -> void:
 	pass
 
-func _hook_process(delta: float) -> void:
+func _hook_process(_delta: float) -> void:
 	velocity = global_position.direction_to(target_hook_position) * hook_speed
 	move_and_slide()
 	
