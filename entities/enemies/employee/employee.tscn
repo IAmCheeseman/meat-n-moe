@@ -30,7 +30,7 @@ height = 16.0
 
 [node name="Employee" groups=["employee"] instance=ExtResource("1_0exql")]
 script = ExtResource("1_j083q")
-aim_dist = 5.0
+aim_dist = 32.0
 corpse_texture = ExtResource("3_kltqi")
 
 [node name="Sprite" parent="." index="0"]

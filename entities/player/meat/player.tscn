@@ -172,6 +172,10 @@ is_enemy = false
 
 [node name="Timers" type="Node" parent="."]
 
+[node name="SlideBlood" type="Timer" parent="Timers"]
+wait_time = 0.02
+autostart = true
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Health" type="ColorRect" parent="CanvasLayer"]
@@ -194,3 +198,4 @@ stream = ExtResource("13_653bm")
 [connection signal="selected" from="Sprite/Weapons/Gun" to="." method="_on_weapon_selected"]
 [connection signal="selected" from="Sprite/Weapons/Fist" to="." method="_on_weapon_selected"]
 [connection signal="dead" from="DamageManager" to="." method="_on_damage_manager_dead"]
+[connection signal="timeout" from="Timers/SlideBlood" to="." method="_on_slide_blood_timeout"]

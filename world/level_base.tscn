@@ -947,6 +947,7 @@ color = Color(0.831373, 0.662745, 0, 1)
 y_sort_enabled = true
 
 [node name="Tilemap" type="TileMap" parent="."]
+y_sort_enabled = true
 tile_set = SubResource("TileSet_vo2p4")
 format = 2
 layer_0/name = "Walls"
@@ -967,6 +968,7 @@ gizmo_extents = 50.0
 
 [node name="Elevator" type="Sprite2D" parent="Tilemap/PlayerStart"]
 position = Vector2(-3, -29)
+z_index = 1
 texture = ExtResource("5_y67c3")
 
 [node name="LoadingZone" type="Area2D" parent="Tilemap"]

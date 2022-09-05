@@ -109,7 +109,7 @@ z_index = 1
 
 [node name="LoadingZone" parent="Tilemap" index="1"]
 position = Vector2(1064, 510)
-go_to = "res://ui/level-select/level_select_world.tscn"
+go_to = "res://world/levels/level_1c.tscn"
 
 [node name="Papers" type="Node2D" parent="Tilemap/Props" index="0"]
 z_index = 1

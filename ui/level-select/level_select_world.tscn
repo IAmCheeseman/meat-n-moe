@@ -210,7 +210,7 @@ level_texture = ExtResource("5_a26hp")
 position = Vector2(58, -75)
 z_index = 1
 boss = true
-level_name = "The CEO, John Yohn John John VI"
+level_name = "The CEO, Burt Smith IIX "
 level_desc = "Time for Meat n' Moe's justice, THE CEO IS GONNA BE MASS MURDERED."
 level_texture = ExtResource("6_mq538")
 

@@ -80,6 +80,8 @@ func _walk_process(delta: float) -> void:
 	animation_player.play("employee_animations/Walk")
 	sprite.scale.x = -1 if velocity.x < 0 else 1
 	
+	_new_target_position()
+	
 	var target_dir = Pathfinder.get_astar_path(
 		global_position,
 		target_position

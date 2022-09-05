@@ -9,11 +9,11 @@
 [ext_resource type="Texture2D" uid="uid://ckccmvwkjddqx" path="res://assets/entities/moe_bloody.png" id="5_imny8"]
 [ext_resource type="PackedScene" uid="uid://djb4vg80da4om" path="res://entities/player/moe/gun.tscn" id="6_5hlaf"]
 [ext_resource type="PackedScene" uid="uid://js1bpqxxd18t" path="res://tools/hit-and-hurt-boxes/hurtbox.tscn" id="6_jgqc7"]
-[ext_resource type="PackedScene" uid="uid://cjyhbs6t0x0xn" path="res://entities/player/moe/hook.tscn" id="7_ao2k4"]
 [ext_resource type="Script" path="res://tools/damage-manager/damage_manager.gd" id="7_i625j"]
 [ext_resource type="PackedScene" uid="uid://o3bwmnsmu6lw" path="res://entities/player/moe/melee.tscn" id="8_cirhg"]
 [ext_resource type="Shader" path="res://entities/player/moe/health.gdshader" id="8_wbss7"]
 [ext_resource type="Script" path="res://entities/player/moe/boomerang.gd" id="9_0xd21"]
+[ext_resource type="PackedScene" uid="uid://cpy1wcspww325" path="res://entities/player/moe/shield.tscn" id="11_4nsrc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pfjri"]
 radius = 2.0
@@ -21,7 +21,7 @@ height = 8.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_etbls"]
 shader = ExtResource("4_4rq8x")
-amount = 0.0
+amount = 0.48
 noise = ExtResource("4_7xsrt")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_k7ruj"]
@@ -66,9 +66,6 @@ texture = ExtResource("5_imny8")
 [node name="Weapons" type="Node2D" parent="Sprite"]
 position = Vector2(0, -1)
 
-[node name="Hook" parent="Sprite/Weapons" instance=ExtResource("7_ao2k4")]
-visible = false
-
 [node name="Gun" parent="Sprite/Weapons" instance=ExtResource("6_5hlaf")]
 
 [node name="Melee" parent="Sprite/Weapons" instance=ExtResource("8_cirhg")]
@@ -78,6 +75,9 @@ visible = false
 visible = false
 script = ExtResource("9_0xd21")
 cooldown = 1
+
+[node name="Shield" parent="Sprite/Weapons" instance=ExtResource("11_4nsrc")]
+visible = false
 
 [node name="Shadow" type="Sprite2D" parent="."]
 show_behind_parent = true
@@ -96,6 +96,7 @@ shape = SubResource("CircleShape2D_k7ruj")
 [node name="DamageManager" type="Node" parent="."]
 script = ExtResource("7_i625j")
 hurtbox_path = NodePath("../Collision/Hurtbox")
+kb_multiplier = 1.0
 is_enemy = false
 
 [node name="Timers" type="Node" parent="."]
@@ -112,9 +113,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[connection signal="hook_hit" from="Sprite/Weapons/Hook" to="." method="_on_hook_hit"]
 [connection signal="selected" from="Sprite/Weapons/Gun" to="." method="_on_weapon_selected"]
 [connection signal="selected" from="Sprite/Weapons/Melee" to="." method="_on_weapon_selected"]
 [connection signal="selected" from="Sprite/Weapons/Boomerang" to="." method="_on_weapon_selected"]
+[connection signal="selected" from="Sprite/Weapons/Shield" to="." method="_on_weapon_selected"]
 [connection signal="dead" from="DamageManager" to="." method="_on_damage_manager_dead"]
 [connection signal="timeout" from="Timers/Roll" to="." method="_on_roll_timeout"]

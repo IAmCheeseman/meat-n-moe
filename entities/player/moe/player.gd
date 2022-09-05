@@ -42,12 +42,6 @@ var _s_roll = State.new(
 	Callable(self, "_roll_ready"),
 	Callable(self, "_roll_end")
 )
-var _s_hook = State.new(
-	"hook",
-	Callable(self, "_hook_process"),
-	Callable(self, "_hook_start"),
-	Callable(self, "_hook_end")
-)
 var _state_machine = StateMachine.new(_s_default)
 
 var current_weapon := 0
@@ -71,6 +65,13 @@ func _is_state(to: String) -> bool:
 
 func _ready() -> void:
 	shadow.texture = ShadowGenerator.generate(sprite.texture.get_width())
+	
+	damage_manager.check_functions.append(
+		func(amt: float, kb: Vector2):
+			var weapon := weapons.get_child(current_weapon)
+			var blocked := -kb.dot(get_local_mouse_position()) < 0.25
+			return weapon.name != "Shield" or !weapon.visible or blocked
+	)
 
 func _physics_process(delta: float) -> void:
 	_state_machine.process(delta)
@@ -90,9 +91,10 @@ func _physics_process(delta: float) -> void:
 		
 	blood.offset = sprite.offset
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("roll") and _is_state("default") and _get_input_dir() != Vector2.ZERO:
 		_state_machine.change_state(_s_roll)
+		get_tree().root.set_input_as_handled()
 		return
 
 
@@ -125,34 +127,11 @@ func _on_roll_timeout() -> void:
 	_state_machine.change_state(_s_default)
 
 
-func _hook_start() -> void:
-	pass
-
-func _hook_process(_delta: float) -> void:
-	velocity = global_position.direction_to(target_hook_position) * hook_speed
-	move_and_slide()
-	
-	if global_position.distance_to(target_hook_position) < 20 or test_move(transform, velocity.normalized() * 10):
-		_state_machine.change_state(_s_default)
-	update()
-	
-	GameManager.camera.shake(1, 3, 3, 0.1, 0.1, false)
-
-func _hook_end() -> void:
-	hook.hide()
-	hook.state_machine.change_state(hook._s_idle)
-	
-	velocity /= 5
-
-func _on_hook_hit(end_position: Vector2) -> void:
-	target_hook_position = end_position
-	_state_machine.change_state(_s_hook)
-
-
 func _on_damage_manager_dead() -> void:
 	get_tree().reload_current_scene()
 
 
 func _on_weapon_selected(node: Node2D) -> void:
+	current_weapon = node.get_index()
 	for w in weapons.get_children():
 		w.visible = w == node

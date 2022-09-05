@@ -85,18 +85,22 @@ func _physics_process(delta: float) -> void:
 	blood.frame = sprite.frame
 
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("roll"):
 		_teleport()
+		get_tree().root.set_input_as_handled()
 	if event.is_action_pressed("secondary_move") and _state_machine.get_state_name() == "default":
 		_state_machine.change_state(_s_slide)
+		get_tree().root.set_input_as_handled()
 	if event.is_action_released("secondary_move") and _state_machine.get_state_name() == "slide":
 		_state_machine.change_state(_s_default)
+		get_tree().root.set_input_as_handled()
 
 
 func _teleport() -> void:
 	var dir = _get_input_dir()
-	var teleport_target_position = global_position + dir * teleport_distance
+	var dist = teleport_distance * (1.2 if _state_machine.get_state_name() == "slide" else 1)
+	var teleport_target_position = global_position + dir * dist
 	
 	teleport_rc.global_position = teleport_target_position
 	for rc in teleport_rc.get_children():
@@ -117,7 +121,7 @@ func _teleport() -> void:
 	
 	blood_particles.restart()
 	
-	damage_manager.take_damage(damage_manager.max_health * 0.4, Vector2.ZERO)
+	damage_manager.take_damage(damage_manager.health * 0.4, Vector2.ZERO)
 	
 	global_position = teleport_target_position
 	
@@ -152,16 +156,24 @@ func _slide_process(delta: float) -> void:
 	
 	var input_dir := _get_input_dir()
 	
-	if velocity.dot(input_dir) < 0\
-	or input_dir == Vector2.ZERO\
-	or velocity.length() < 100:
+	if (
+		velocity.dot(input_dir) < 0
+		or input_dir == Vector2.ZERO
+		or velocity.length() < 100
+	):
 		_state_machine.change_state(_s_default)
 	
-	GameManager.camera.shake(1, 4, 4, 0.1, 0.1, false)
+	GameManager.camera.shake(1, 2, 2, 0.1, 0.1, false)
 	
 	velocity = velocity.move_toward(input_dir * slide_speed, slide_accel * delta)
 	
 	move_and_slide()
+
+func _on_slide_blood_timeout() -> void:
+	if _state_machine.get_state_name() != "slide": return
+	var new_blood = preload("res://entities/effects/blood/blood.tscn").instantiate()
+	new_blood.global_position = global_position 
+	GameManager.world.add_child(new_blood)
 
 
 func _on_damage_manager_dead() -> void:
@@ -171,3 +183,6 @@ func _on_damage_manager_dead() -> void:
 func _on_weapon_selected(node: Node2D) -> void:
 	for w in weapons.get_children():
 		w.visible = w == node
+
+
+
