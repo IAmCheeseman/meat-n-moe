@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://quktui6w80kl"]
+
+[ext_resource type="Script" path="res://ui/cursor/cursor.gd" id="1_uns03"]
+[ext_resource type="Texture2D" uid="uid://v7n44epa0stp" path="res://assets/ui/cursor_corner.png" id="1_vjv5x"]
+
+[node name="Cursor" type="CanvasLayer"]
+layer = 2
+script = ExtResource("1_uns03")
+
+[node name="Node" type="Node2D" parent="."]
+
+[node name="Corner1" type="Sprite2D" parent="Node"]
+texture = ExtResource("1_vjv5x")
+offset = Vector2(3, -3)
+
+[node name="Corner2" type="Sprite2D" parent="Node"]
+texture = ExtResource("1_vjv5x")
+offset = Vector2(3, 3)
+flip_v = true
+
+[node name="Corner3" type="Sprite2D" parent="Node"]
+texture = ExtResource("1_vjv5x")
+offset = Vector2(-3, 3)
+flip_h = true
+flip_v = true
+
+[node name="Corner4" type="Sprite2D" parent="Node"]
+texture = ExtResource("1_vjv5x")
+offset = Vector2(-3, -3)
+flip_h = true

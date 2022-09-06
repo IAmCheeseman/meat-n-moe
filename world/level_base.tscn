@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cgfky48vvn6iw"]
+[gd_scene load_steps=20 format=3 uid="uid://cgfky48vvn6iw"]
 
 [ext_resource type="Script" path="res://world/world.gd" id="1_tlsli"]
 [ext_resource type="Texture2D" uid="uid://bomfyuowwffe2" path="res://assets/world/cubicals.png" id="3_sc148"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://rw6txia38j6p" path="res://assets/world/chairs.png" id="6_e4h7g"]
 [ext_resource type="Texture2D" uid="uid://daju2q4kcw287" path="res://assets/world/walls.png" id="7_k4lop"]
 [ext_resource type="Script" path="res://tools/shadow-generator/tile_shadows.gd" id="8_o3te4"]
+[ext_resource type="PackedScene" uid="uid://dl45r18sln7j7" path="res://ui/hud/hud.tscn" id="11_wkpys"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_bqc51"]
 tile_data = PackedInt32Array(0, 1, 2, 65536, 131073, 4, 196608, 131073, 2, 262144, 1, 4, 1, 65537, 0, 262145, 65537, 0, 2, 65537, 0, 262146, 65537, 0, 3, 65537, 0, 262147, 65537, 0, 4, 65537, 2, 65540, 131073, 3, 131076, 131073, 3, 196612, 131073, 3, 262148, 65537, 4)
@@ -942,6 +943,7 @@ offset_top = -356.0
 offset_right = 727.0
 offset_bottom = 381.0
 color = Color(0.831373, 0.662745, 0, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="Enemies" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -984,6 +986,23 @@ y_sort_enabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="ViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
+offset_right = 512.0
+offset_bottom = 512.0
+
+[node name="Viewport" type="SubViewport" parent="CanvasLayer/ViewportContainer"]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(320, 180)
+size_2d_override = Vector2i(320, 180)
+render_target_update_mode = 4
+
 [node name="CharacterSelect" parent="CanvasLayer" instance=ExtResource("4_ikxpj")]
 visible = false
 player_start_path = NodePath("../../Tilemap/PlayerStart")
+
+[node name="Hud" parent="CanvasLayer" instance=ExtResource("11_wkpys")]

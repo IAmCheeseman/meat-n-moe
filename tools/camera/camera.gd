@@ -36,7 +36,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	var mouse_pos = parent.get_local_mouse_position()
-	position = mouse_pos * weight
+	position = round(mouse_pos * weight)
 	
 	offset = offset.move_toward(Vector2.ZERO, 100 * delta)
 

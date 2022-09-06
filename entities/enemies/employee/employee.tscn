@@ -30,7 +30,7 @@ height = 16.0
 
 [node name="Employee" groups=["employee"] instance=ExtResource("1_0exql")]
 script = ExtResource("1_j083q")
-aim_dist = 32.0
+aim_dist = 48.0
 corpse_texture = ExtResource("3_kltqi")
 
 [node name="Sprite" parent="." index="0"]
@@ -79,6 +79,7 @@ shape = SubResource("CapsuleShape2D_eje3b")
 
 [node name="DamageManager" parent="." index="4"]
 blood_path = NodePath("../Sprite/Blood")
+kb_multiplier = 50.0
 
 [node name="Aim" type="Timer" parent="Timers" index="0"]
 one_shot = true

@@ -21,6 +21,7 @@ func _ready() -> void:
 	for i in shadow.get_children():
 		i.queue_free()
 	
+	await FrameTimer.physics_timer(self).timeout
 	enemies.get_parent().call_deferred("remove_child", enemies)
 	await FrameTimer.physics_timer(self).timeout
 	add_child(enemies)

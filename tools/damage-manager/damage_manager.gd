@@ -60,5 +60,9 @@ func take_damage(amt: float, kb: Vector2) -> void:
 	if health <= 0 and !already_told_dead:
 		emit_signal("dead")
 		already_told_dead = true
+		
+		if is_enemy:
+			GameManager.score += max_health * 100
+			GameManager.add_score_popup(parent, max_health * 100)
 	
 	get_tree().call_group("player", "add_blood", parent)

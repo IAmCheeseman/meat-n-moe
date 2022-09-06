@@ -7,7 +7,6 @@ extends CharacterBody2D
 @onready var health_vignette = $CanvasLayer/Health
 
 @onready var weapons = $Sprite/Weapons
-@onready var hook := $Sprite/Weapons/Hook
 
 @onready var roll_timer := $Timers/Roll
 
@@ -128,6 +127,7 @@ func _on_roll_timeout() -> void:
 
 
 func _on_damage_manager_dead() -> void:
+	GameManager.score = GameManager.stage_start_score
 	get_tree().reload_current_scene()
 
 

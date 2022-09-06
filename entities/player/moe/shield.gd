@@ -1,6 +1,5 @@
 extends Node2D
 
-@onready var sprite := $Sprite
 @onready var pivot := $Pivot
 
 @export var shield_dist := 8.0

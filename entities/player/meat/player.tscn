@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dbwwkk2lo6n1u"]
+[gd_scene load_steps=27 format=3 uid="uid://dbwwkk2lo6n1u"]
 
 [ext_resource type="Script" path="res://entities/player/meat/player.gd" id="1_ukk7d"]
 [ext_resource type="Script" path="res://tools/camera/camera.gd" id="2_hqqti"]
@@ -13,6 +13,8 @@
 [ext_resource type="Shader" path="res://entities/player/moe/health.gdshader" id="8_wbss7"]
 [ext_resource type="AnimationLibrary" uid="uid://bg0k3lqo0t2nk" path="res://entities/player/meat/meat_animations.res" id="9_juyhy"]
 [ext_resource type="AudioStream" uid="uid://dq6nag0vxwx1v" path="res://assets/sounds/teleport.mp3" id="13_653bm"]
+[ext_resource type="AudioStream" uid="uid://ck1wxh0otwlth" path="res://assets/sounds/meat_hurt.wav" id="14_aeg5u"]
+[ext_resource type="AudioStream" uid="uid://c6p0sqcey4qgr" path="res://assets/sounds/meat_enter.wav" id="14_rxc6a"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pfjri"]
 radius = 2.0
@@ -168,6 +170,7 @@ process_material = SubResource("ParticleProcessMaterial_fgfdn")
 script = ExtResource("7_i625j")
 hurtbox_path = NodePath("../Collision/Hurtbox")
 max_health = 3.5
+kb_multiplier = 30.0
 is_enemy = false
 
 [node name="Timers" type="Node" parent="."]
@@ -195,7 +198,16 @@ libraries = {
 [node name="TeleportSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_653bm")
 
+[node name="HurtSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_aeg5u")
+volume_db = 12.0
+
+[node name="EnterSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_rxc6a")
+autoplay = true
+
 [connection signal="selected" from="Sprite/Weapons/Gun" to="." method="_on_weapon_selected"]
 [connection signal="selected" from="Sprite/Weapons/Fist" to="." method="_on_weapon_selected"]
 [connection signal="dead" from="DamageManager" to="." method="_on_damage_manager_dead"]
+[connection signal="took_damage" from="DamageManager" to="." method="_on_took_damage"]
 [connection signal="timeout" from="Timers/SlideBlood" to="." method="_on_slide_blood_timeout"]

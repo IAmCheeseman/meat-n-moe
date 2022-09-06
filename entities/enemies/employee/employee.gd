@@ -94,7 +94,7 @@ func _walk_process(delta: float) -> void:
 	
 	move_and_slide()
 	
-	if global_position.distance_to(target_position) < aim_dist:
+	if global_position.distance_to(target_position) < aim_dist and player_detection.get_player() != null:
 		_state_machine.change_state(_s_aim)
 
 
@@ -110,12 +110,15 @@ func _aim_start() -> void:
 	arm.show()
 	_continuous_shots += 1
 
-func _aim_process(_delta: float) -> void:
+func _aim_process(delta: float) -> void:
 	animation_player.play("employee_animations/Aim")
 	
 	arm.look_at(_player.global_position)
 	
 	sprite.scale.x = -1 if _player.global_position.x < global_position.x else 1
+	
+	velocity = velocity.move_toward(Vector2.ZERO, frict * delta)
+	move_and_slide()
 
 func _aim_end() -> void:
 	if visible:

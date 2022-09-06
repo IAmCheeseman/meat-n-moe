@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://pwuylhkc33bh"]
+[gd_scene load_steps=20 format=3 uid="uid://pwuylhkc33bh"]
 
 [ext_resource type="Script" path="res://entities/player/moe/player.gd" id="1_5dugi"]
 [ext_resource type="Script" path="res://entities/player/moe/animate.gd" id="2_x5t0t"]
@@ -14,6 +14,7 @@
 [ext_resource type="Shader" path="res://entities/player/moe/health.gdshader" id="8_wbss7"]
 [ext_resource type="Script" path="res://entities/player/moe/boomerang.gd" id="9_0xd21"]
 [ext_resource type="PackedScene" uid="uid://cpy1wcspww325" path="res://entities/player/moe/shield.tscn" id="11_4nsrc"]
+[ext_resource type="AudioStream" uid="uid://2p1psjp02s7x" path="res://assets/sounds/moe_enter.wav" id="15_inn5m"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pfjri"]
 radius = 2.0
@@ -21,7 +22,7 @@ height = 8.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_etbls"]
 shader = ExtResource("4_4rq8x")
-amount = 0.48
+amount = 0.0
 noise = ExtResource("4_7xsrt")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_k7ruj"]
@@ -112,6 +113,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="EnterSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_inn5m")
+autoplay = true
 
 [connection signal="selected" from="Sprite/Weapons/Gun" to="." method="_on_weapon_selected"]
 [connection signal="selected" from="Sprite/Weapons/Melee" to="." method="_on_weapon_selected"]

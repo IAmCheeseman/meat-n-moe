@@ -8,6 +8,7 @@ extends CharacterBody2D
 @onready var health_vignette := $CanvasLayer/Health
 
 @onready var teleport_sfx := $TeleportSFX
+@onready var hurt_sfx := $HurtSFX
 
 @onready var weapons := $Sprite/Weapons
 
@@ -177,12 +178,16 @@ func _on_slide_blood_timeout() -> void:
 
 
 func _on_damage_manager_dead() -> void:
+	GameManager.score = GameManager.stage_start_score
 	get_tree().reload_current_scene()
+
+func _on_took_damage() -> void:
+	hurt_sfx.pitch_scale = 1 + randf() / 4
+	hurt_sfx.play()
 
 
 func _on_weapon_selected(node: Node2D) -> void:
 	for w in weapons.get_children():
 		w.visible = w == node
-
 
 
